@@ -21,6 +21,13 @@ const Login = () => (
                         <p>LOGIN WITH Slack</p>
                     </div>
                 </a>
+
+                <a href="/auth/github">
+                    <div className="btn" id="login-btn">
+                        <img src="/GitHub-Mark-64px.png" alt="github logo" />
+                        <p>LOGIN WITH Github</p>
+                    </div>
+                </a>
             </div>
         </div>
 
@@ -30,8 +37,11 @@ const Login = () => (
                 display: flex;
                 justify-content: center;
               }
+              .btn img{
+                  height: 3vh;
+              }
               .login {
-                margin: 86px auto 0 auto;
+                // margin: 86px auto 0 auto;
                 text-align: center;
             }
             
@@ -47,7 +57,7 @@ const Login = () => (
             
             .btn > img {
                 float: left;
-                margin-left: 10px
+                // margin-left: 10px
             }
             /****** Logo Div Styling ******/
             

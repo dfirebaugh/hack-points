@@ -112,21 +112,21 @@ class BountyCard extends Component {
           userBtns)}
       </div>
       <style jsx>{`
-                            .bounty-container {
-                              padding: 15px;
-                            }
-                            .cardContainer{
-                              padding:10px;
-                            }
-                            .icon { 
-                              width:48px;
-                              height:48px;
-                            }
-                            .card { 
-                              width:100%;
-                              padding:10px;
-                            }
-                            `
+        .bounty-container {
+          padding: 15px;
+        }
+        .cardContainer{
+          padding:10px;
+        }
+        .icon { 
+          width:48px;
+          height:48px;
+        }
+        .card { 
+          width:100%;
+          padding:10px;
+        }
+        `
       }
       </style>
     </div>
