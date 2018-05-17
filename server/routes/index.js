@@ -1,19 +1,24 @@
 'use strict';
 
-var User = require('../models/users');
-var Bounty = require('../models/bounties');
-var path = process.cwd();
+const User = require('../models/users');
+const Bounty = require('../models/bounties');
+const path = process.cwd();
 
 
-module.exports = function (app, passport) {
+module.exports = (app, passport) => {
+	const isLoggedIn = (req, res, next) =>  req.isAuthenticated() ?
+												 next() : 
+												 res.redirect('/login');
+		
+	// {
 
-	function isLoggedIn(req, res, next) {
-		if (req.isAuthenticated()) {
-			return next();
-		} else {
-			res.redirect('/login');
-		}
-	}
+		// if (req.isAuthenticated()) {
+		// 	return next();
+		// } else {
+		// 	res.redirect('/login');
+		// }
+	// }
+
 
 	app.route('/')
 		.get(isLoggedIn, (req, res) => req.app.render(req, res, '/index', {
@@ -25,13 +30,13 @@ module.exports = function (app, passport) {
 	}));
 
 	app.route('/logout')
-		.get(function (req, res) {
+		.get((req, res) => {
 			req.logout();
 			res.redirect('/login');
 		});
 
 	app.route('/')
-		.get(isLoggedIn, function (req, res) {
+		.get(isLoggedIn,  (req, res) => {
 			res.sendFile(path + '/public/index.html');
 		});
 
@@ -41,21 +46,21 @@ module.exports = function (app, passport) {
 		});
 
 	app.route('/api/v1/user/points/')
-		.get(isLoggedIn, function (req, res) {
+		.get(isLoggedIn, (req, res) => {
 			res.json(req.user.user.hackPoints);
 		});
 
 	app.route('/api/v1/')
-		.get(isLoggedIn, function (req, res) {
+		.get(isLoggedIn, (req, res) => {
 			res.json(req.user);
 		});
 
 	app.route(isLoggedIn, '/api/v1/bounties/')
 	app.route('/api/v1/bounties/')
-		.get(function (req, res) {
-			var bounties = Bounty.find({}, function (err, doc) { res.send(doc) })
+		.get((req, res) =>  {
+			var bounties = Bounty.find({}, (err, doc) => { res.send(doc) })
 		})
-		.post(isLoggedIn, function (req, res) {
+		.post(isLoggedIn, (req, res) => {
 			var bounty = new Bounty();
 			bounty.title = req.body.title;
 			bounty.message = req.body.message;
@@ -66,7 +71,7 @@ module.exports = function (app, passport) {
 			bounty.createdIcon = req.body.createdIcon;
 
 
-			bounty.save(function (err) {
+			bounty.save((err) => {
 				if (err) {
 					res.send(err);
 				}
@@ -79,26 +84,26 @@ module.exports = function (app, passport) {
 
 
 	app.route('/api/v1/bounties/:bountyid')
-		.get(isLoggedIn, function (req, res) {
+		.get(isLoggedIn, (req, res) => {
 			console.log(req.params.bountyid)
-			Bounty.findById(req.params.bountyid, function (err, doc) {
+			Bounty.findById(req.params.bountyid, (err, doc) => {
 				if (err)
 					res.send(err);
 				res.json(doc);
 			});
 		})
-		.delete(isLoggedIn, function (req, res) {
+		.delete(isLoggedIn, (req, res) => {
 			Bounty.remove({
 				_id: req.body._id
-			}, function (err, bounty) {
+			}, (err, bounty) => {
 				if (err)
 					res.send(err);
 
 				res.json({ message: 'Successfully deleted' });
 			});
 		})
-		.put(isLoggedIn, function (req, res) {
-			Bounty.findById(req.params.bountyid, function (err, bounty) {
+		.put(isLoggedIn, (req, res) => {
+			Bounty.findById(req.params.bountyid, (err, bounty) => {
 				if (err) {
 					res.send(err);
 				}
@@ -109,7 +114,7 @@ module.exports = function (app, passport) {
 				bounty.completedBy = req.body.completedBy;
 
 				// save the bounty
-				bounty.save(function (err) {
+				bounty.save( (err) => {
 					if (err)
 						res.send(err);
 
@@ -120,7 +125,7 @@ module.exports = function (app, passport) {
 
 
 	app.route('/api/v1/user/')
-		.get(isLoggedIn, function (req, res) {
+		.get(isLoggedIn, (req, res) => {
 			res.json(req.user.slack.user);
 		});
 

@@ -12,7 +12,7 @@ class Bounty extends Component {
   componentDidMount() {
     this.getUser();
   }
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     console.log('submit')
     console.log(this.title.value)
     console.log(this.message.value)
@@ -33,11 +33,13 @@ class Bounty extends Component {
       })
     })
       .then(function (response) {
-        document.getElementById('bountyTitle').value = '';
-        document.getElementById('bountyMessage').value = '';
-        document.getElementById('bountyMinutes').value = '';
-
+        this.cleanForm();
       });
+  }
+  cleanForm = () => {
+    document.getElementById('bountyTitle').value = '';
+    document.getElementById('bountyMessage').value = '';
+    document.getElementById('bountyMinutes').value = '';
   }
 
   getUser() {
@@ -47,16 +49,15 @@ class Bounty extends Component {
       .then((responseJson) => {
         that.setState({ points: responseJson.hackPoints })
         that.setState({ userInfo: responseJson })
-        return responseJson;
       })
       .catch((error) => {
         console.error(error);
       });
-
-  }
+    }
 
 
   render() {
+    
     let textAreaStyle = {
       height: '14em'
     }
@@ -64,7 +65,6 @@ class Bounty extends Component {
       width: '80%',
       marginLeft: '90px'
     }
-    console.log(this.state.userInfo)
     return (
       <div className="container">
         <TopNav />
