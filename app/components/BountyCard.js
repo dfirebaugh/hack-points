@@ -111,7 +111,7 @@ class BountyCard extends Component {
       </div>
         {
           !this.state.isCollapsed &&
-        <div>
+        <div className='col-md-8'>
           <p>created by: {this.props.createdBy}</p>
 
           <div className='card'>
@@ -129,8 +129,11 @@ class BountyCard extends Component {
       }
       </div>
       <style jsx>{`
+      h3{
+        font-size:8;
+      }
         .bounty-container {
-          padding: 15px;
+          // padding: 15px;
         }
         .cardContainer{
           padding:10px;
@@ -141,6 +144,7 @@ class BountyCard extends Component {
         }
         .card {
           width:100%;
+          padding-left:0;
         }
         .icon{
           animation: glow 3s infinite alternate;

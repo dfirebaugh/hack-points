@@ -6,7 +6,7 @@ class TotalPointsBar extends Component {
     const pointPercentage = this.props.points / this.props.goal * 100;
     return (
       <div className="points-container">
-      <div className='points-bar'>{this.props.points} points  out of {this.props.goal}</div>
+      <div className='points-bar'>{this.props.points} / {this.props.goal}</div>
 
         <style jsx>{`
                     .points-bar{
@@ -14,6 +14,7 @@ class TotalPointsBar extends Component {
                       width: ${pointPercentage}%;
                       color: white;
                       text-align: center;
+                      box-shadow: 0 0 -10px 10px white;
                     }
                     .points-container{
                       background-color:grey;

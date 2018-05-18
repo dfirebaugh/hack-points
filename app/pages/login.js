@@ -22,12 +22,12 @@ const Login = () => (
                     </div>
                 </a>
 
-                <a href="/auth/github">
+                {/* <a href="/auth/github">
                     <div className="btn" id="login-btn">
                         <img src="/GitHub-Mark-64px.png" alt="github logo" />
                         <p>LOGIN WITH Github</p>
                     </div>
-                </a>
+                </a> */}
             </div>
         </div>
 

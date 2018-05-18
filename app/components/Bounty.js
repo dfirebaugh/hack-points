@@ -95,7 +95,7 @@ class Bounty extends Component {
                       width:100%;
                     }
                     .form{
-                      width:50%;
+                      width:100%;
                       marginLeft:90px;
                     }
                     `

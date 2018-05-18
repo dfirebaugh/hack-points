@@ -21,6 +21,10 @@
     "ssr",
     "boilerplate"
   ],
+  "now": {
+    "name": "Hack Points",
+    "alias": "hackpoints.hackrva.org"
+    },
   "license": "MIT",
   "scripts": {
     "build": "cd app && next build",

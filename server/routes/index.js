@@ -47,7 +47,9 @@ module.exports = (app, passport) => {
 				User.find({},(err,doc) => {
 					let arr = doc.map((currItem) =>  currItem.hackPoints)
 					// console.log(arr)
-					res.send({totalHackPoints: arr.reduce((acc, value) => acc + value)})
+					res.send({
+						totalHackPoints: arr.reduce((acc, value) => acc + value),
+					})
 				}
 			)
 		});
