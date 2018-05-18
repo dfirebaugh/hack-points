@@ -11,7 +11,7 @@ import BountyCard from '../components/BountyCard';
 class Browse extends Component {
   constructor(props) {
     super(props)
-    this.state = { bounties: [], userInfo: { slack: { displayName: '', id: '' }, user: { role: "" } }, showStatus: 'COMPLETED' }
+    this.state = { bounties: [], userInfo: { slack: { displayName: '', id: '' }, user: { role: "" } }, showStatus: 'PENDING' }
 
     this.handleClick = this.handleClick.bind(this)
   }
@@ -19,7 +19,7 @@ class Browse extends Component {
     this.getBounties()
   }
   getBounties() {
-    return fetch(`http://localhost:8080/api/v1/bounties/`, { credentials: 'same-origin' })
+    fetch(`http://localhost:8080/api/v1/bounties/`, { credentials: 'same-origin' })
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({ bounties: responseJson })
@@ -28,19 +28,22 @@ class Browse extends Component {
         console.error(error);
       });
   }
-  getUser() {
-    return fetch(`http://localhost:8080/api/v1/`, { credentials: 'same-origin' })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        this.setState({ points: responseJson.hackPoints })
-        this.setState({ userInfo: responseJson })
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
+  // getUser() {
+  //   fetch(`http://localhost:8080/api/v1/`, { credentials: 'same-origin' })
+  //     .then((response) => response.json())
+  //     .then((responseJson) => {
+  //       console.log(responseJson)
+  //       this.setState({
+  //         points: responseJson.hackPoints,
+  //         // userInfo: responseJson.user
+  //       })
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }
   handleClick(e) {
-    // console.log(e.target.id)
+    console.log(e.target.id)
     this.setState({ showStatus: e.target.id })
   }
   render() {
@@ -62,20 +65,19 @@ class Browse extends Component {
         bounty.isAuthor = false;
       }
       return <BountyCard
-        key={index}
-        message={bounty.message}
-        title={bounty.title}
-        id={bounty._id}
-        isAuthor={bounty.isAuthor}
-        status={bounty.status}
-        createdIcon={bounty.createdIcon}
-        pointValue={bounty.pointValue}
-        role={this.state.userInfo.user.role}
-        createdBy={bounty.createdBy}
-        currUserId={this.state.userInfo.slack.id}
-        currUser={this.state.userInfo.slack.displayName}
-
-      />
+                key={index}
+                message={bounty.message}
+                title={bounty.title}
+                id={bounty._id}
+                isAuthor={bounty.isAuthor}
+                status={bounty.status}
+                createdIcon={bounty.createdIcon}
+                pointValue={bounty.pointValue}
+                role={this.state.userInfo.user.role}
+                createdBy={bounty.createdBy}
+                currUserId={this.state.userInfo.slack.id}
+                currUser={this.state.userInfo.slack.displayName}
+                />
     })
 
 

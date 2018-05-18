@@ -10,9 +10,7 @@ import Bounty from '../components/Bounty';
 
 
 class AddBounty extends Component {
-
     render() {
-
         return (
             <Theme>
                 <NavMenu />

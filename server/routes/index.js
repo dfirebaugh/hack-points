@@ -6,18 +6,13 @@ const path = process.cwd();
 
 
 module.exports = (app, passport) => {
-	const isLoggedIn = (req, res, next) =>  req.isAuthenticated() ?
-												 next() : 
-												 res.redirect('/login');
-		
-	// {
-
+	const isLoggedIn = (req, res, next) => {
 		// if (req.isAuthenticated()) {
-		// 	return next();
+			return next();
 		// } else {
 		// 	res.redirect('/login');
 		// }
-	// }
+	}
 
 
 	app.route('/')
@@ -45,6 +40,13 @@ module.exports = (app, passport) => {
 			res.sendFile(path + '/public/login.html');
 		});
 
+
+	app.route('/api/v1/user/')
+		.get(isLoggedIn, (req, res) => {
+			User.find({},(err,doc) => res.send(doc))
+			// res.json(req.user.slack.user);
+		});
+
 	app.route('/api/v1/user/points/')
 		.get(isLoggedIn, (req, res) => {
 			res.json(req.user.user.hackPoints);
@@ -70,13 +72,16 @@ module.exports = (app, passport) => {
 			bounty.createdBy = req.body.createdBy;
 			bounty.createdIcon = req.body.createdIcon;
 
-
+		//TODO :: add validation
 			bounty.save((err) => {
 				if (err) {
 					res.send(err);
 				}
 
-				res.json({ message: 'Bounty created!' });
+				res.json({
+					message: 'Bounty created!',
+					id: bounty.id
+				});
 			});
 			console.log(bounty)
 
@@ -104,34 +109,23 @@ module.exports = (app, passport) => {
 		})
 		.put(isLoggedIn, (req, res) => {
 			Bounty.findById(req.params.bountyid, (err, bounty) => {
-				if (err) {
-					res.send(err);
+				if (err) { res.send(err); }
+
+				if (req.headers.status) {
+					bounty.status = req.headers.status;
 				}
 
-				bounty.name = req.body.name;
-				bounty.id = req.body._id;
-				bounty.status = req.body.status;
-				bounty.completedBy = req.body.completedBy;
+				bounty.points = req.headers.points;
 
 				// save the bounty
 				bounty.save( (err) => {
-					if (err)
-						res.send(err);
-
+					if (err) res.send(err);
 					res.json({ message: 'Bounty updated!' });
 				});
 			})
 		})
 
-
-	app.route('/api/v1/user/')
-		.get(isLoggedIn, (req, res) => {
-			res.json(req.user.slack.user);
-		});
-
-
-
-	// auth stuff 
+	// auth stuff
 
 	app.route('/auth/slack')
 		.get(passport.authenticate('slack'));
