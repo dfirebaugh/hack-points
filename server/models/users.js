@@ -4,7 +4,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var User = new Schema({
+	name: String,
 	hackPoints: Number,
+	img:String,
+	email:String,
 	user: {
 		name: String,
 		role: String

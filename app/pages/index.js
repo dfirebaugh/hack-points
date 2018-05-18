@@ -1,15 +1,32 @@
-import Link from 'next/link';
-import { Button } from 'react-bootstrap';
+import React, { Component } from 'react';
 import Theme from '../components/Theme';
 import NavMenu from '../components/NavMenu';
+import TotalPointsBar from '../components/TotalPointsBar';
 
 // Straight away require/import scss/css just like in react.
 import indexStyle from '../styles/index.scss';
 
-const Index = () => (
-    // Wrap your page inside <Theme> HOC to get bootstrap styling.
-    // Theme can also be omitted if react-bootstrap components are not used.
-    <Theme>
+class Index extends Component {
+  componentDidMount = () => {
+    fetch(`http://localhost:8080/api/v1/users/totalPoints/`, { credentials: 'same-origin' })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({
+          totalPoints: responseJson
+        })
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+  render(){
+    this.state && console.log(this.state.totalPoints.totalHackPoints)
+    return (
+      <Theme>
+      {/*
+        this.state &&
+        <TotalPointsBar points={11} goal={20}/>
+      */}
         <NavMenu />
         <div className='info-text jumbotron'>
             <p>
@@ -25,6 +42,9 @@ const Index = () => (
         }
         </style>
     </Theme>
-);
+  )
 
+}
+
+}
 export default Index;

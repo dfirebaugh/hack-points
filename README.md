@@ -9,14 +9,20 @@ All users' points are added together to make up the Groups total points.
 * navigate to project root and run `npm install` to install dependencies
 * create a `.env` to store environmental variables:
     > GITHUB_KEY=
+    >
     > GITHUB_SECRET=
+    >
     > SLACK_KEY=
+    >
     > SLACK_SECRET=
+    >
     > MONGO_URI=mongodb://localhost:27017/hackerpoints
+    >
     > PORT=8080
+    >
     > APP_URL=http://localhost:8080/
 
-You will need to setup an oauth token with 
+You will need to setup an oauth token with
 [slack](https://api.slack.com/docs/oauth)
 
 
@@ -47,4 +53,5 @@ Badges -- e.g. qualified laser user
 
 ### API
 `/api/v1/` -- returns information about current logged on users
+
 `/api/v1/bounties/` -- returns all bounties

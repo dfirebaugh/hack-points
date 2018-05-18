@@ -29,13 +29,13 @@ app.use(helmet());
 app.disable('x-powered-by');
 
 app.use(session({
-    secret: 'secretClementine',
-    resave: false,
-    saveUninitialized: true
+    secret: 'anything',
+    // resave: false,
+    // saveUninitialized: true
 }));
-
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(cookieParser());
@@ -52,6 +52,7 @@ const start = async (port) => {
     // Even if you don't do explicit routing the pages inside app/pages
     // will still get rendered as per their normal route.
     routes(app, passport);
+
 
     app.listen(port);
 };

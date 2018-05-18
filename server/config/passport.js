@@ -33,10 +33,13 @@ module.exports = function (passport)  {
 					} else {
 						var newUser = new User();
 
+						newUser.name = profile.displayName;
+						newUser.email = profile.user.email;
 						newUser.slack.id = profile.id;
 						newUser.slack.user = profile.user;
 						newUser.slack.displayName = profile.displayName;
 						newUser.user.role = "Admin";
+						newUser.img = profile.user.image_48;
 						newUser.hackPoints = 0;
 
 						newUser.save(function (err) {

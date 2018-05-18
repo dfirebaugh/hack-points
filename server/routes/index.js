@@ -7,14 +7,16 @@ const path = process.cwd();
 
 module.exports = (app, passport) => {
 	const isLoggedIn = (req, res, next) => {
-		// if (req.isAuthenticated()) {
+		if (req.isAuthenticated() || req.method === 'OPTIONS') {
 			return next();
-		// } else {
-		// 	res.redirect('/login');
-		// }
+		} else {
+
+			req.session.error = 'Please sign in!';
+			res.status(400).send();
+			res.redirect('/login');
+
+		}
 	}
-
-
 	app.route('/')
 		.get(isLoggedIn, (req, res) => req.app.render(req, res, '/index', {
 			routeParam: req.params.routeParam
@@ -30,34 +32,35 @@ module.exports = (app, passport) => {
 			res.redirect('/login');
 		});
 
-	app.route('/')
-		.get(isLoggedIn,  (req, res) => {
-			res.sendFile(path + '/public/index.html');
+		app.route('/api/v1/users/')
+			.get(isLoggedIn, (req, res) => {
+				User.find({},(err,doc) => res.send(doc))
+			});
+		app.route('/api/v1/users/currentUser/')
+			.get(isLoggedIn,(req, res) => {
+				res.send(req.user)
+			});
+
+			//Returns the points of all users combined
+		app.route('/api/v1/users/totalPoints/')
+			.get(isLoggedIn,(req, res) => {
+				User.find({},(err,doc) => {
+					let arr = doc.map((currItem) =>  currItem.hackPoints)
+					// console.log(arr)
+					res.send({totalHackPoints: arr.reduce((acc, value) => acc + value)})
+				}
+			)
 		});
 
-	app.route('/login')
-		.get((req, res) => {
-			res.sendFile(path + '/public/login.html');
-		});
 
 
-	app.route('/api/v1/user/')
-		.get(isLoggedIn, (req, res) => {
-			User.find({},(err,doc) => res.send(doc))
-			// res.json(req.user.slack.user);
-		});
 
-	app.route('/api/v1/user/points/')
-		.get(isLoggedIn, (req, res) => {
-			res.json(req.user.user.hackPoints);
-		});
 
-	app.route('/api/v1/')
-		.get(isLoggedIn, (req, res) => {
-			res.json(req.user);
-		});
 
-	app.route(isLoggedIn, '/api/v1/bounties/')
+
+
+
+
 	app.route('/api/v1/bounties/')
 		.get((req, res) =>  {
 			var bounties = Bounty.find({}, (err, doc) => { res.send(doc) })
@@ -83,14 +86,11 @@ module.exports = (app, passport) => {
 					id: bounty.id
 				});
 			});
-			console.log(bounty)
-
 		});
 
 
 	app.route('/api/v1/bounties/:bountyid')
 		.get(isLoggedIn, (req, res) => {
-			console.log(req.params.bountyid)
 			Bounty.findById(req.params.bountyid, (err, doc) => {
 				if (err)
 					res.send(err);

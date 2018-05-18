@@ -9,7 +9,7 @@ import ProfileComponent from '../components/ProfileComponent';
 
   class Profile extends Component {
     componentWillMount = () => {
-      fetch(`http://localhost:8080/api/v1/user`, { credentials: 'same-origin' })
+      fetch(`http://localhost:8080/api/v1/users/currentUser/`, { credentials: 'same-origin' })
         .then((response) => response.json())
         .then((responseJson) => {
 
@@ -32,11 +32,11 @@ import ProfileComponent from '../components/ProfileComponent';
           {
             this.state &&
           <ProfileComponent
-            displayName={this.state.userInfo[0].slack.displayName}
-            email={this.state.userInfo[0].slack.user.email}
-            points={this.state.userInfo[0].hackPoints}
-            imgIcon={this.state.userInfo[0].slack.user.image_48}
-            userInfo={this.state.userInfo[0]}
+            displayName={this.state.userInfo.name}
+            email={this.state.userInfo.email}
+            points={this.state.userInfo.hackPoints}
+            imgIcon={this.state.userInfo.img}
+            userInfo={this.state.userInfo}
             />
           }
         </Theme>

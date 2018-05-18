@@ -3,9 +3,16 @@ import React, { Component } from 'react';
 class Bounty extends Component {
   componentDidMount = () => {
     this.getUser();
-    this.state && console.log('state: ', this.state)
   }
   handleSubmit = (event) => {
+    console.log('submit')
+    // console.log(this.title.value)
+    // console.log(this.message.value)
+    // console.log(this.minutes.value)
+    // console.log(this.state.userInfo.name)
+    // console.log(this.state.userInfo.image)
+
+    // event.preventDefault();
     console.log('submit')
     console.log(this.title.value)
     console.log(this.message.value)
@@ -23,8 +30,8 @@ class Bounty extends Component {
         "status": 'PENDING',
         "pointValue": this.minutes.value,
         "completedBy": '',
-        "createdBy": this.state.userInfo.slack.displayName,
-        "createdIcon": this.state.userInfo.slack.user.image_48
+        "createdBy": this.state.userInfo.name,
+        "createdIcon": this.state.userInfo.img
       })
     })
       .then((response) => {
@@ -39,14 +46,13 @@ class Bounty extends Component {
 
   getUser = () => {
     console.log('running')
-    fetch(`http://localhost:8080/api/v1/user/`, { credentials: 'same-origin' })
+    fetch(`http://localhost:8080/api/v1/users/currentuser/`, { credentials: 'same-origin' })
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log('userInfo: ',responseJson)
         this.setState({
-          userInfo: responseJson[0],
-          points: responseJson[0].hackPoints
+          userInfo: responseJson
         })
+        // console.log(this.state.userInfo)
       })
       .catch((error) => {
         console.error(error);
@@ -55,8 +61,7 @@ class Bounty extends Component {
 
 
   render = () => {
-    this.state && console.log('state: ',this.state)
-
+    this.state && console.log('state: ', this.state.userInfo)
     return (
       <div className="container">
         <div className="jumbotron">
