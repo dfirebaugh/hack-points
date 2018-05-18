@@ -1,38 +1,44 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Joi = require('joi');
+const joigoose = require('joigoose')(mongoose); 
+const Schema = mongoose.Schema;
 
-var User = new Schema({
-	name: String,
-	hackPoints: Number,
-	img:String,
-	email:String,
+const joiUserSchema = Joi.object({
+	name: Joi.string().required(),
+	hackPoints: Joi.number(),
+	img: Joi.string().required(),
+	email: Joi.string().required(),
 	user: {
-		name: String,
-		role: String
+		name:  Joi.string(),
+		role:  Joi.string().required()
 	},
 	github: {
-		id: String,
-		displayName: String,
-		username: String,
-		publicRepos: Number
+		id:  Joi.string(),
+		displayName:  Joi.string(),
+		username:  Joi.string(),
+		publicRepos:  Joi.number()
 	},
 	slack: {
-		id: String,
-		displayName: String,
+		id:  Joi.string(),
+		displayName:  Joi.string(),
 		user: {
-			image_1024: String,
-			image_512: String,
-			image_192: String,
-			image_72: String,
-			image_48: String,
-			image_32: String,
-			email: String,
-			id: String,
-			name: String
+			image_1024:  Joi.string(),
+			image_512:  Joi.string(),
+			image_192:  Joi.string(),
+			image_72:  Joi.string(),
+			image_48:  Joi.string(),
+			image_32:  Joi.string(),
+			email:  Joi.string(),
+			id:  Joi.string(),
+			name:  Joi.string()
 		}
 	}
-});
+})
 
-module.exports = mongoose.model('User', User);
+const mongooseUserSchema = new Schema(joigoose.convert(joiUserSchema));
+
+
+
+module.exports = mongoose.model('User', mongooseUserSchema);

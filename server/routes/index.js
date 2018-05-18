@@ -66,25 +66,30 @@ module.exports = (app, passport) => {
 			var bounties = Bounty.find({}, (err, doc) => { res.send(doc) })
 		})
 		.post(isLoggedIn, (req, res) => {
-			var bounty = new Bounty();
-			bounty.title = req.body.title;
-			bounty.message = req.body.message;
-			bounty.status = req.body.status;
-			bounty.pointValue = req.body.pointValue;
-			bounty.completedBy = req.body.completedBy;
-			bounty.createdBy = req.body.createdBy;
-			bounty.createdIcon = req.body.createdIcon;
+			let bounty = new Bounty({
 
-		//TODO :: add validation
-			bounty.save((err) => {
+				title: req.body.title,
+				message: req.body.message,
+				status: req.body.status,
+				pointValue: req.body.pointValue,
+				createdBy: req.body.createdBy,
+				createdIcon: req.body.createdIcon
+	
+			});
+
+			bounty.save((err, result) => {
 				if (err) {
-					res.send(err);
+					res.json({
+						err: err.message,
+						id: bounty.id
+					});
 				}
-
-				res.json({
-					message: 'Bounty created!',
-					id: bounty.id
-				});
+				else{
+					res.json({
+						message: 'success!',
+						id: bounty.id
+					});
+				}
 			});
 		});
 
