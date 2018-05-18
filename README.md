@@ -52,6 +52,14 @@ Badges -- e.g. qualified laser user
 
 
 ### API
-`/api/v1/` -- returns information about current logged on users
+`/api/v1/users/` -- returns all users
+
+`/api/v1/users/:userid` -- returns specific user based on id
+
+`/api/v1/users/currentUser` -- returns information about current logged on users
+
+`/api/v1/users/totalPoints` -- returns the totalPoints of all users
 
 `/api/v1/bounties/` -- returns all bounties
+
+`/api/v1/bounties/:bountyid` -- returns specific bounty based on id
