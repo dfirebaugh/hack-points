@@ -1,13 +1,25 @@
 language: node_js
 node_js:
-- "node"
-before_install:
+  - "node"
+before-install:
+  - npm install -g nodemon
+install:
   - npm install 
 cache:
   directories:
     - "node_modules"
 cache: npm
-script: npm run build
+script: nodemon --ignore app/ app.js
 env:
 global:
     secure: <this is your encrypted NOW token. It was added when you ran travis encrypt>
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: .travis/deploy.sh
+  on:
+    all_branches: true
+notifications:
+  email: false
+  slack:
+secure: rWg9[...]x69

@@ -48,13 +48,12 @@ module.exports = (app, passport) => {
 					let arr = doc.map((currItem) =>  currItem.hackPoints)
 					// console.log(arr)
 					res.send({
+						//summing up all the hackpoints
 						totalHackPoints: arr.reduce((acc, value) => acc + value),
 					})
 				}
 			)
 		});
-
-
 
 
 
