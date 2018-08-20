@@ -3,8 +3,6 @@ sudo: required
 language: node_js
 
 node_js:
-    - 9
-    - 8
     - node
 
 services:
@@ -18,7 +16,6 @@ before_install:
 
 deploy:
     provider: gae
-    keyfile: ...
     project: hack-points
     no_promote: true
 env:
