@@ -14,6 +14,7 @@ before_install:
     - docker ps -a
     - docker run carlad/sinatra /bin/sh -c "cd /root/sinatra; bundle exec rake test"
 deploy:
+    keyfile: hack-points-241209ef6978.json
     provider: gae
     project: hack-points
     no_promote: true
