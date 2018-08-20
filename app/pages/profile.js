@@ -8,7 +8,7 @@ import ProfileComponent from '../components/ProfileComponent';
 
 class Profile extends Component {
 	componentWillMount = () => {
-		fetch(`http://localhost/api/users/currentUser/`, { credentials: 'same-origin' })
+		fetch(`${process.env.APP_URL}api/users/currentUser/`, { credentials: 'same-origin' })
 			.then(response => response.json())
 			.then(responseJson => {
 				this.setState({

@@ -14,7 +14,7 @@ class BountyBoard extends Component {
 		this.getBounties();
 	}
 	getBounties() {
-		fetch(`http://localhost/api/bounties/`, { credentials: 'same-origin' })
+		fetch(`${process.env.APP_URL}api/bounties/`, { credentials: 'same-origin' })
 			.then(response => response.json())
 			.then(responseJson => {
 				this.setState({ bounties: responseJson });
@@ -24,7 +24,7 @@ class BountyBoard extends Component {
 			});
 	}
 	// getUser() {
-	//   fetch(`http://localhost/api/`, { credentials: 'same-origin' })
+	//   fetch(`${process.env.APP_URL}api/`, { credentials: 'same-origin' })
 	//     .then((response) => response.json())
 	//     .then((responseJson) => {
 	//       console.log(responseJson)

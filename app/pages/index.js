@@ -8,7 +8,7 @@ import indexStyle from '../styles/index.scss';
 
 class Index extends Component {
 	componentDidMount = () => {
-		fetch(`http://localhost/api/users/totalPoints/`, { credentials: 'same-origin' })
+		fetch(`${process.env.APP_URL}api/users/totalPoints/`, { credentials: 'same-origin' })
 			.then(response => response.json())
 			.then(responseJson => {
 				this.setState({

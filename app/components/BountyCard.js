@@ -22,7 +22,7 @@ class BountyCard extends Component {
 		//   method = 'PUT'
 		// }
 		// this.setState({visible:false})
-		// fetch(`http://localhost/api/bounties/${id}`, {
+		// fetch(`${process.env.APP_URL}api/bounties/${id}`, {
 		//   method: operation,
 		//   headers: { 'Content-Type': 'application/json' },
 		//   credentials: 'same-origin',
@@ -36,7 +36,7 @@ class BountyCard extends Component {
 	handleDelete(currUser, id) {
 		// console.log('id: ', id)
 		// console.log('user: ', currUser)
-		// fetch(`http://localhost/api/bounties/${id}`, {
+		// fetch(`${process.env.APP_URL}api/bounties/${id}`, {
 		//   method: 'DELETE',
 		//   headers: {'Content-Type':'application/json'},
 		//   credentials:'same-origin',

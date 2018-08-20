@@ -20,7 +20,7 @@ class Bounty extends Component {
 		console.log(this.state.userInfo.slack.displayName);
 
 		event.preventDefault();
-		fetch('http://localhost/api/bounties', {
+		fetch('${process.env.APP_URL}api/bounties', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			credentials: 'same-origin',
@@ -45,7 +45,7 @@ class Bounty extends Component {
 
 	getUser = () => {
 		console.log('running');
-		fetch(`http://localhost/api/users/currentuser/`, { credentials: 'same-origin' })
+		fetch(`${process.env.APP_URL}api/users/currentuser/`, { credentials: 'same-origin' })
 			.then(response => response.json())
 			.then(responseJson => {
 				this.setState({

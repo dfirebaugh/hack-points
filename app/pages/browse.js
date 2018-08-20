@@ -5,13 +5,11 @@ import NavMenu from '../components/NavMenu';
 import BountyBoard from '../components/BountyBoard';
 
 class Browse extends Component {
-  
-  
-  render() {
-    return (
-      <Theme>
-        <NavMenu />
-        {/* <button
+	render() {
+		return (
+			<Theme>
+				<NavMenu />
+				{/* <button
           id='PENDING'
           type="button"
           className="btn btn-dark"
@@ -27,18 +25,12 @@ class Browse extends Component {
           Completed
             </button> */}
 
-        <BountyBoard /> 
+				<BountyBoard />
 
-        <style jsx>{`
-              
-              `
-        }
-        </style>
-      </Theme>
-    )
-  }
+				<style jsx>{``}</style>
+			</Theme>
+		);
+	}
 }
-
-
 
 export default Browse;
