@@ -7,11 +7,6 @@ services:
 before_install:
 - openssl aes-256-cbc -K $encrypted_c969e5736884_key -iv $encrypted_c969e5736884_iv
   -in hack-points-241209ef6978.json.enc -out hack-points-241209ef6978.json -d
-- docker pull carlad/sinatra
-- docker run -d -p 127.0.0.1:80:4567 carlad/sinatra /bin/sh -c "cd /root/sinatra;
-  bundle exec foreman start;"
-- docker ps -a
-- docker run carlad/sinatra /bin/sh -c "cd /root/sinatra; bundle exec rake test"
 deploy:
   keyfile: hack-points-241209ef6978.json
   provider: gae
