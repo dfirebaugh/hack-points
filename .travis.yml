@@ -1,23 +1,19 @@
 sudo: required
-
 language: node_js
-
 node_js:
     - node
-
 services:
     - docker
-
 before_install:
+    - openssl aes-256-cbc -K $encrypted_fb487ff84b7b_key -iv $encrypted_fb487ff84b7b_iv
+      -in hack-points-241209ef6978.json.enc -out hack-points-241209ef6978.json
+      -d
     - docker pull carlad/sinatra
-    - docker run -d -p 127.0.0.1:80:4567 carlad/sinatra /bin/sh -c "cd /root/sinatra; bundle exec foreman start;"
+    - docker run -d -p 127.0.0.1:80:4567 carlad/sinatra /bin/sh -c "cd /root/sinatra;
+      bundle exec foreman start;"
     - docker ps -a
     - docker run carlad/sinatra /bin/sh -c "cd /root/sinatra; bundle exec rake test"
-
 deploy:
     provider: gae
     project: hack-points
     no_promote: true
-env:
-    global:
-        secure: WFhf2+QILdSh2zGB/ZrMK3V1YFKZwVBHixFlYhmJbaSph774cqI3QEYlbZvHR72kes6yGnGI2/uBLiyXxjwoQTcPnggXHb5OzN/gUj5AuOK4GOfDMhVbllXPBF9huH7jFKX6adESdL7P21GCgw9fRxf/476IGdWDKKOAc2OQ3mPnPVmjejiKpWxdbxec3Y+CAgOVNl2hMP6aS7SWOBr6Z4g57EqLtSmhV5cd4vn3PHUYvA7wJmZ5lCNse6AKZ2t2SuCZbqP27JgZQA2Be4Xpf34voMOVD34hs+KrqpRPR99svgESBHdpykIalWth0rLQa2jCu3zhs6HgbdvdbBPYIeGEMHqR6LGVWWG5KnjfOAB751bbD7k0aBO8qd9ytwQ7/Y6HKV0UlDNHVrm4JhOyH3xLBsVsE1umXcid2QrUm1tDXhxtG5Dhp0oA5BphtNoRboglbphZM16cSUTZkZ2wMI50savkEKTOgGFeFfcBYk1Sdz9fmoI/XbiiOZYMCIVMoA6FX/2xHEK3NUAc8sfoW3LM24+h+OeEyV7Nm2trzVRtlZiROZCFueJZf4XZtl7ucnwssgMrbf6DKUwG6BD4/C2dWyXbEF58hR6mFytYUsa+CqwKFFVIJqN3t9CdAjeh6PwX3aCDQBbdmjtcRmXYGJb/53NM6C9XmVwLmVQNoHc=
