@@ -1,115 +1,117 @@
 {
-  "name": "next-express-bootstrap-boilerplate",
-  "version": "0.0.5",
-  "description": "JavaScript boilerplate for a full stack app built using React.js, Next.js, Express.js, react-bootstrap, SCSS and full SSR with eslint.",
-  "main": "app.js",
-  "repository": "https://github.com/MustansirZia/next-express-bootstrap-boilerplate",
-  "author": {
-    "name": "Mustansir Zia",
-    "email": "mustansir29@hotmail.com"
-  },
-  "keywords": [
-    "react",
-    "react.js",
-    "nextjs",
-    "next.js",
-    "expressjs",
-    "express.js",
-    "react-bootstrap",
-    "scss",
-    "javascript",
-    "ssr",
-    "boilerplate"
-  ],
-  "now": {
-    "name": "Hack Points",
-    "alias": "hackpoints.hackrva.org"
-  },
-  "license": "MIT",
-  "scripts": {
-    "build": "cd app && next build",
-    "start": "npm run build && env NODE_ENV=production node app.js",
-    "dev": "nodemon --ignore app/ app.js"
-  },
-  "eslintConfig": {
-    "extends": "airbnb",
-    "settings": {
-      "import/core-modules": [
-        "styled-jsx/css"
-      ]
-    },
-    "rules": {
-      "arrow-parens": "off",
-      "global-require": "off",
-      "indent": [
-        "error",
-        4
-      ],
-      "no-console": "off",
-      "comma-dangle": "off",
-      "no-underscore-dangle": "off",
-      "func-names": "off",
-      "no-use-before-define": "off",
-      "react/jsx-indent": [
-        "error",
-        4
-      ],
-      "react/jsx-indent-props": [
-        "error",
-        4
-      ],
-      "react/jsx-filename-extension": [
-        1,
-        {
-          "extensions": [
-            ".js",
-            ".jsx"
-          ]
-        }
-      ],
-      "react/react-in-jsx-scope": "off",
-      "react/no-danger": "off"
-    }
-  },
-  "dependencies": {
-    "autoprefixer": "7.1.5",
-    "babel-plugin-module-resolver": "^2.7.1",
-    "babel-plugin-wrap-in-js": "^1.1.0",
-    "body-parser": "^1.18.2",
-    "cookie-parser": "^1.4.3",
-    "dotenv": "^5.0.1",
-    "dotenv-webpack": "^1.5.7",
-    "es6-promise": "^4.2.4",
-    "express": "^4.16.2",
-    "express-session": "^1.15.6",
-    "glob": "^7.1.2",
-    "helmet": "^3.12.0",
-    "isomorphic-fetch": "^2.2.1",
-    "joi": "^13.3.0",
-    "joigoose": "^4.0.0",
-    "mongoose": "^5.1.1",
-    "morgan": "^1.9.0",
-    "next": "^4.1.4",
-    "node-sass": "^4.9.3",
-    "normalize.css": "^7.0.0",
-    "passport": "^0.4.0",
-    "passport-github": "^1.1.0",
-    "passport-slack": "0.0.7",
-    "postcss-easy-import": "^3.0.0",
-    "postcss-loader": "^2.0.7",
-    "prop-types": "^15.6.0",
-    "raw-loader": "^0.5.1",
-    "react": "^16.0.0",
-    "react-bootstrap": "^0.31.5",
-    "react-dom": "^16.0.0",
-    "sass-loader": "^6.0.6"
-  },
-  "devDependencies": {
-    "eslint": "^4.10.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-react": "^7.4.0",
-    "nodemon": "^1.12.1"
-  }
+	"name": "next-express-bootstrap-boilerplate",
+	"version": "0.0.5",
+	"description": "JavaScript boilerplate for a full stack app built using React.js, Next.js, Express.js, react-bootstrap, SCSS and full SSR with eslint.",
+	"main": "app.js",
+	"repository": "https://github.com/MustansirZia/next-express-bootstrap-boilerplate",
+	"author": {
+		"name": "Mustansir Zia",
+		"email": "mustansir29@hotmail.com"
+	},
+	"keywords": [
+		"react",
+		"react.js",
+		"nextjs",
+		"next.js",
+		"expressjs",
+		"express.js",
+		"react-bootstrap",
+		"scss",
+		"javascript",
+		"ssr",
+		"boilerplate"
+	],
+	"now": {
+		"name": "Hack Points",
+		"alias": "hackpoints.hackrva.org"
+	},
+	"license": "MIT",
+	"scripts": {
+		"prestart": "node getEnv",
+		"build": "cd app && next build",
+		"start": "npm run build && env NODE_ENV=production node app.js",
+		"dev": "nodemon --ignore app/ app.js"
+	},
+	"eslintConfig": {
+		"extends": "airbnb",
+		"settings": {
+			"import/core-modules": [
+				"styled-jsx/css"
+			]
+		},
+		"rules": {
+			"arrow-parens": "off",
+			"global-require": "off",
+			"indent": [
+				"error",
+				4
+			],
+			"no-console": "off",
+			"comma-dangle": "off",
+			"no-underscore-dangle": "off",
+			"func-names": "off",
+			"no-use-before-define": "off",
+			"react/jsx-indent": [
+				"error",
+				4
+			],
+			"react/jsx-indent-props": [
+				"error",
+				4
+			],
+			"react/jsx-filename-extension": [
+				1,
+				{
+					"extensions": [
+						".js",
+						".jsx"
+					]
+				}
+			],
+			"react/react-in-jsx-scope": "off",
+			"react/no-danger": "off"
+		}
+	},
+	"dependencies": {
+		"@google-cloud/storage": "^1.7.0",
+		"autoprefixer": "7.1.5",
+		"babel-plugin-module-resolver": "^2.7.1",
+		"babel-plugin-wrap-in-js": "^1.1.0",
+		"body-parser": "^1.18.2",
+		"cookie-parser": "^1.4.3",
+		"dotenv": "^5.0.1",
+		"dotenv-webpack": "^1.5.7",
+		"es6-promise": "^4.2.4",
+		"express": "^4.16.2",
+		"express-session": "^1.15.6",
+		"glob": "^7.1.2",
+		"helmet": "^3.12.0",
+		"isomorphic-fetch": "^2.2.1",
+		"joi": "^13.3.0",
+		"joigoose": "^4.0.0",
+		"mongoose": "^5.1.1",
+		"morgan": "^1.9.0",
+		"next": "^4.1.4",
+		"node-sass": "^4.9.3",
+		"normalize.css": "^7.0.0",
+		"passport": "^0.4.0",
+		"passport-github": "^1.1.0",
+		"passport-slack": "0.0.7",
+		"postcss-easy-import": "^3.0.0",
+		"postcss-loader": "^2.0.7",
+		"prop-types": "^15.6.0",
+		"raw-loader": "^0.5.1",
+		"react": "^16.0.0",
+		"react-bootstrap": "^0.31.5",
+		"react-dom": "^16.0.0",
+		"sass-loader": "^6.0.6"
+	},
+	"devDependencies": {
+		"eslint": "^4.10.0",
+		"eslint-config-airbnb": "^16.1.0",
+		"eslint-plugin-import": "^2.8.0",
+		"eslint-plugin-jsx-a11y": "^6.0.2",
+		"eslint-plugin-react": "^7.4.0",
+		"nodemon": "^1.12.1"
+	}
 }
