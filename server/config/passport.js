@@ -1,10 +1,31 @@
 'use strict';
 const SlackStrategy = require('passport-slack').Strategy;
 const GitHubStrategy = require('passport-github').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/users');
 const configAuth = require('./auth');
+const crypto = require('crypto');
 
 module.exports = function (passport)  {
+	const verifyPassword = (givenPassword, hashedPassword) => {
+        let splits = hashedPassword.split(':')
+        let hashAlg = splits[0]
+        let keyLength = parseInt(splits[1])
+        let rounds = parseInt(splits[2])
+        let salt = splits[3]
+        let pbkdf2 = splits[4]
+
+        let testPbkdf2 = crypto.pbkdf2Sync(
+            givenPassword,
+            salt,
+            rounds,
+            keyLength,
+            hashAlg
+        ).toString('hex')
+
+        return testPbkdf2 === pbkdf2
+    };
+
 	passport.serializeUser(function (user, done) {
 		done(null, user.id);
 	});
@@ -90,4 +111,22 @@ module.exports = function (passport)  {
 			});
 		});
 	}));
+
+	passport.use(new LocalStrategy(
+		function(email, password, done) {
+			process.nextTick(function () {
+				User.findOne({
+					email: email
+				}, function(err, user) {
+					if(!user || err) {
+						return done(null, false, { message: 'Incorrect username or password.' });
+					}
+					if(verifyPassword(password, user.password)) {
+						return done(null, user);
+					}
+					return done(null, false, { message: 'Incorrect username or password.' });
+				});
+			});
+		}
+	));
 };

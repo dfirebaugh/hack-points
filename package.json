@@ -96,6 +96,7 @@
 		"normalize.css": "^7.0.0",
 		"passport": "^0.4.0",
 		"passport-github": "^1.1.0",
+		"passport-local": "^1.0.0",
 		"passport-slack": "0.0.7",
 		"postcss-easy-import": "^3.0.0",
 		"postcss-loader": "^2.0.7",

@@ -10,6 +10,7 @@ const joiUserSchema = Joi.object({
 	hackPoints: Joi.number(),
 	img: Joi.string().required(),
 	email: Joi.string().required(),
+	password: Joi.string().required(),
 	user: {
 		name:  Joi.string(),
 		role:  Joi.string().required()
