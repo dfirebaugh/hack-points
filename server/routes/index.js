@@ -3,6 +3,7 @@
 const User = require('../models/users');
 const Bounty = require('../models/bounties');
 const path = process.cwd();
+const crypto = require('crypto');
 
 module.exports = (app, passport) => {
 	const isLoggedIn = (req, res, next) => {
@@ -14,6 +15,22 @@ module.exports = (app, passport) => {
 			res.redirect('/login');
 		}
 	};
+	const hashPassword = (plainText) => {
+		let rounds = 10000;
+		let alg = 'sha512';
+		let keyLength = 512;
+        let salt = crypto.randomBytes(64).toString('hex');
+        let pbkdf2 = crypto.pbkdf2Sync(
+            plainText,
+            salt,
+            rounds,
+            keyLength,
+            alg
+        ).toString('hex')
+
+        return `${alg}:${keyLength}:${rounds}:${salt}:${pbkdf2}`
+	};
+
 	app.route('/').get(isLoggedIn, (req, res) =>
 		req.app.render(req, res, '/index', {
 			routeParam: req.params.routeParam,
@@ -25,6 +42,71 @@ module.exports = (app, passport) => {
 			routeParam: req.params.routeParam
 		})
 	);
+
+	app.route('/register').get((req, res) =>
+		req.app.render(req, res, '/register', {
+			routeParam: req.params.routeParam
+		})
+	).post((req, res) => {
+		const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		const finish = (message, error) => {
+			if(error) {
+				req.flash('error', error);
+			}
+			if(message) {
+				req.flash('success', message);
+			}
+			req.app.render(req, res, '/register', {
+				routeParam: req.params.routeParam
+			})
+		};
+		let { email, name, password } = req.body;
+		let errors = [];
+
+		if(!email) {
+			errors.push('Email field is required');
+		}
+		if(!emailRegex.test(String(email).toLowerCase())) {
+			errors.push('Email field needs to contain a valid email address');
+		}
+		if(!name) {
+			errors.push('Name field is required');
+		}
+		if(!password) {
+			errors.push('Password field is required');
+		}
+		if(errors.length > 0) {
+			return finish(null, errors);
+		}
+		let defaultProfileImage = 'https://www.gravatar.com/avatar/' + 
+			crypto.createHash('md5').update(email.trim().toLowerCase()).digest("hex") + '.jpg?s=200';
+		let newUser = new User({
+			email: email,
+			name: name,
+			img: defaultProfileImage,
+			password: hashPassword(password),
+			user: {
+				role: 'ADMIN'
+			}
+		});
+		User.findOne({
+			email: email
+		}, (err, user) => {
+			if(err) {
+				return finish(null, 'Server error');
+			}
+			if(user) {
+				return finish(null, 'A user with this email address already exists');
+			}
+			User.create(newUser, (err, user) => {
+				if(err) {
+					return finish(null, 'Server error');
+				}
+				return finish('Successfully registered!');
+			});
+		});
+	});
+
 
 	app.route('/logout').get((req, res) => {
 		req.logout();
