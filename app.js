@@ -12,6 +12,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
 const helmet = require('helmet');
+const flash = require('express-flash');
 
 const app = express();
 require('dotenv').load();
@@ -25,6 +26,7 @@ if (process.env.NODE_ENV !== 'production') {
 	// app.use(logger('dev'));
 }
 
+app.use(flash());
 app.use(helmet());
 app.disable('x-powered-by');
 

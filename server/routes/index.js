@@ -22,7 +22,7 @@ module.exports = (app, passport) => {
 
 	app.get('/login', (req, res) =>
 		req.app.render(req, res, '/login', {
-			routeParam: req.params.routeParam,
+			routeParam: req.params.routeParam
 		})
 	);
 
@@ -34,6 +34,7 @@ module.exports = (app, passport) => {
 	app.route('/api/users/').get(isLoggedIn, (req, res) => {
 		User.find({}, (err, doc) => res.send(doc));
 	});
+
 	app.route('/api/users/currentUser/').get(isLoggedIn, (req, res) => {
 		res.send(req.user);
 	});
@@ -139,4 +140,10 @@ module.exports = (app, passport) => {
 			failureRedirect: '/login',
 		})
 	);
+
+	app.route('/auth/local').post(passport.authenticate('local', {
+		successRedirect: '/',
+		failureRedirect: '/login',
+		failureFlash: true
+	}));
 };
