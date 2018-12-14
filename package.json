@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^3.6.2",
+    "@material-ui/icons": "^3.0.1",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-scripts": "2.1.1"
@@ -21,5 +23,18 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "description": "A bounty system where users can create and complete tasks to win points. All users' points are added together to make up the Groups total points.",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dfirebaugh/hack-points.git"
+  },
+  "author": "Dustin Firebaugh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dfirebaugh/hack-points/issues"
+  },
+  "homepage": "https://github.com/dfirebaugh/hack-points#readme"
 }

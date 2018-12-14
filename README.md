@@ -1,44 +1,58 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Hack Points
+A bounty system where users can create and complete tasks to win points.
+All users' points are added together to make up the Groups total points.
 
-## Available Scripts
 
-In the project directory, you can run:
+### Project setup:
+* Download [mongodb](https://www.mongodb.com/download-center#community)
+* start `mongod --dbpath=<path to data>`  make sure this continues to run in the background
+* navigate to project root and run `npm install` to install dependencies
+* create a `.env` to store environmental variables:
+    > GITHUB_KEY=
+    >
+    > GITHUB_SECRET=
+    >
+    > SLACK_KEY=
+    >
+    > SLACK_SECRET=
+    >
+    > MONGO_URI=mongodb://localhost:27017/hackerpoints
+    >
+    > PORT=8080
+    >
+    > APP_URL=http://localhost:8080/
 
-### `npm start`
+You will need to setup an oauth token with
+[slack](https://api.slack.com/docs/oauth)
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+* run `npm run dev` to spin up the webserver
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+### User Stories
+ - user logs in and sees a board full of bounties
+ - user can +1 a bounty to increase it's weight -- can only do this once per bounty
+ - user can comment on a bounty
+ - user can create a bounty -- bounties are created with one point/weight value
+ - when a user completes a bounty, those points get added to users score
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+ - as bounties gain weight/point value, they get fatter in the UI
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+ - teams total score can be calculated by adding up all points and is visible at all times
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### API
+`/api/users/` -- returns all users
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+`/api/users/:userid` -- returns specific user based on id
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`/api/users/me` -- returns information about current logged on user
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+`/api/users/totalPoints` -- returns the totalPoints of all users
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+`/api/bounties/` -- returns all bounties
 
-## Learn More
+`/api/bounties/:bountyid` -- returns specific bounty based on id
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+`/api/bounties/:bountyid/endorse` -- adds your endorsement on a bounty
