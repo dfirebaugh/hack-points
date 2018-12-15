@@ -13,7 +13,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -26,7 +28,9 @@
   ],
   "description": "A bounty system where users can create and complete tasks to win points. All users' points are added together to make up the Groups total points.",
   "main": "index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "gh-pages": "^2.0.1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dfirebaugh/hack-points.git"
@@ -36,5 +40,5 @@
   "bugs": {
     "url": "https://github.com/dfirebaugh/hack-points/issues"
   },
-  "homepage": "https://github.com/dfirebaugh/hack-points#readme"
+  "homepage": "http://dfirebaugh.github.io/hack-points"
 }
