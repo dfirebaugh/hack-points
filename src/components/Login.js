@@ -6,12 +6,16 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import TextField from "@material-ui/core/TextField";
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 
-const styles = {
+
+const styles = theme => ({
   appBar: {
     position: 'relative',
   },
@@ -25,101 +29,90 @@ const styles = {
     margin: '2vh',
     marginRight: '6vw',
     width: '80vw',
+  },
+  paper: {
+    marginTop: theme.spacing.unit * 8,
+    display: "flex",
+    width: 400,
+    flexDirection: "column",
+    alignItems: "center",
+    padding: `${theme.spacing.unit * 3}px ${theme.spacing.unit * 6}px ${theme
+      .spacing.unit * 3}px ${theme.spacing.unit * 3}px `
+  },
+  button: {
+    width: "100%"
+  },
+  inputs: {
+    width: "100%"
+  },
+  menuItem: {
+    width: "100%",
+    marginBottom: 8,
+    paddingLeft: 12
+  },
+  form: {
+    width: "100%"
+  },
+  avatar: {
+    marginBottom: 12
+  },
+  logo: {
+    width: "45%"
   }
-};
+});
 
 
-class Login extends React.Component {
 
-  render() {
-    let errorMessage = '';
-    if (this.props.errorMessage) {
-      errorMessage = (
-        <div className="alert alert-danger" role="alert">
-          {this.props.errorMessage}
-        </div>
-      );
-    }
-    return (
-      <div>
-        <div className="container">
-          <div className="jumbotron login">
-            <img className="hackrva-logo" src="/Hackrobot.jpg" />
-            <br />
-            <div className="login-form row">
-              <div className="col-md-3">&nbsp;</div>
-              <div className="col-md-6">
-                {errorMessage}
-                <form action="/auth/local" method="post">
-                  <div className="form-group">
-                    <label>Email address:</label>
-                    <input type="text" name="username" className="form-control" />
-                  </div>
-                  <div className="form-group">
-                    <label>Password:</label>
-                    <input type="password" name="password" className="form-control" />
-                  </div>
-                  <div className="form-group">
-                    <input type="submit" value="Log In" className="form-control" />
-                    <br />
-                    <a href="/register">or register if you don't have an account yet.</a>
-                  </div>
-                </form>
-              </div>
-            </div>
 
+const UserLogin = props => {
+  const { classes, handleSubmit, handleChange, username, password } = props;
+  return (
+    <Grid container justify="center">
+      <Grid item>
+        <Paper className={classes.paper}>
+
+          <img className={classes.logo} src="/Hackrobot.jpg" />
+          <div onKeyPress={props.handleKeyPress}>
+            <MenuItem className={classes.menuItem} disableRipple>
+              <TextField
+                className={classes.inputs}
+                value={username}
+                onChange={handleChange("username")}
+                label="username"
+                name="username"
+                type="text"
+                autoComplete="username"
+              // onKeyPress={props.handleKeyPress}
+              />
+            </MenuItem>
+            <MenuItem className={classes.menuItem} disableRipple>
+              <TextField
+                className={classes.inputs}
+                value={password}
+                onChange={handleChange("password")}
+                label="password"
+                type="password"
+                autoComplete="password"
+              // onKeyPress={props.handleKeyPress}
+              />
+            </MenuItem>
+
+            <MenuItem className={classes.menuItem} disableRipple>
+              <Button
+                className={classes.button}
+                variant="raised"
+                color="primary"
+                disableRipple
+                onClick={handleSubmit}
+              >
+                Login
+        </Button>
+            </MenuItem>
           </div>
-          {/* Styling using styled-jsx. */}
-          <style jsx>{`
-                        .hackrva-logo{
-                          width:30%;
-                        }
-                        .btn {
-                        display: flex;
-                        justify-content: center;
-                        }
-                        .btn img{
-                            height: 3vh;
-                        }
-                        .login {
-                        // margin: 86px auto 0 auto;
-                        text-align: center;
-                        }
-                    
-                    #login-btn {
-                        width: 225px;
-                        padding: 7px 5px;
-                    }
-                    
-                    .btn p {
-                        margin: 8px 0 0 0;
-                        padding: 0;
-                    }
-                    
-                    .btn > img {
-                        float: left;
-                        // margin-left: 10px
-                    }
-                    /****** Logo Div Styling ******/
-                    
-                    img {
-                        margin: 0 auto;
-                        display: block;
-                    }
-                    
-                    .clementine-text { /* Styling for the Clementine.js text */
-                        padding: 0;
-                        margin: -25px 0 0 0;
-                        font-weight: 500;
-                        font-size: 60px;
-                        color: #FFA000;
-                    }`
-          }
-          </style>
-        </div >
-      </div>
-    );
-  }
+        </Paper>
+      </Grid>
+    </Grid>
+  )
 }
 
 
@@ -178,7 +171,8 @@ class FullScreenDialog extends React.Component {
             </Toolbar>
           </AppBar>
 
-          <Login />
+          <UserLogin classes={classes} handleChange={e => console.log(e)} />
+
 
         </Dialog>
       </div>
