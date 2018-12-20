@@ -1,13 +1,13 @@
 {
-  "main.css": "/hack-points/static/css/main.3cc946b1.chunk.css",
-  "main.js": "/hack-points/static/js/main.454df3c6.chunk.js",
-  "main.js.map": "/hack-points/static/js/main.454df3c6.chunk.js.map",
-  "static/js/1.1b53bf07.chunk.js": "/hack-points/static/js/1.1b53bf07.chunk.js",
-  "static/js/1.1b53bf07.chunk.js.map": "/hack-points/static/js/1.1b53bf07.chunk.js.map",
+  "main.css": "/hack-points/static/css/main.30fc8663.chunk.css",
+  "main.js": "/hack-points/static/js/main.512d05ab.chunk.js",
+  "main.js.map": "/hack-points/static/js/main.512d05ab.chunk.js.map",
+  "static/js/1.675886f7.chunk.js": "/hack-points/static/js/1.675886f7.chunk.js",
+  "static/js/1.675886f7.chunk.js.map": "/hack-points/static/js/1.675886f7.chunk.js.map",
   "runtime~main.js": "/hack-points/static/js/runtime~main.d8397f6f.js",
   "runtime~main.js.map": "/hack-points/static/js/runtime~main.d8397f6f.js.map",
-  "static/css/main.3cc946b1.chunk.css.map": "/hack-points/static/css/main.3cc946b1.chunk.css.map",
+  "static/css/main.30fc8663.chunk.css.map": "/hack-points/static/css/main.30fc8663.chunk.css.map",
   "index.html": "/hack-points/index.html",
-  "precache-manifest.34464d9c477a4b41b02be010fce47582.js": "/hack-points/precache-manifest.34464d9c477a4b41b02be010fce47582.js",
+  "precache-manifest.92b93d6670ca8dabe78f14028b0dbc01.js": "/hack-points/precache-manifest.92b93d6670ca8dabe78f14028b0dbc01.js",
   "service-worker.js": "/hack-points/service-worker.js"
 }
