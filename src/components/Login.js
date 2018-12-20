@@ -125,9 +125,6 @@ class FullScreenDialog extends React.Component {
     open: false,
   };
 
-  componentDidMount() {
-    // console.log(this.props.title, this.props.description)
-  }
   handleClickOpen = () => {
     this.setState({ open: true });
   };
@@ -141,13 +138,14 @@ class FullScreenDialog extends React.Component {
     });
   };
 
-  createBounty = () => {
-    console.log(this.state.title, this.state.description)
-    this.handleClose()
+  handleSubmit = () => {
+    console.log(this.state.username, this.state.password)
   }
+
 
   render() {
     const { classes } = this.props;
+
     return (
       <div>
         {this.props.menuItem ?
@@ -171,7 +169,10 @@ class FullScreenDialog extends React.Component {
             </Toolbar>
           </AppBar>
 
-          <UserLogin classes={classes} handleChange={e => console.log(e)} />
+          <UserLogin
+            classes={classes}
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit} />
 
 
         </Dialog>
