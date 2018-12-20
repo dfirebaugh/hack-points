@@ -2,6 +2,7 @@
 A bounty system where users can create and complete tasks to win points.
 All users' points are added together to make up the Groups total points.
 
+[demo](http://dfirebaugh.github.io/hack-points)
 
 ### Project setup:
 * Download [mongodb](https://www.mongodb.com/download-center#community)
