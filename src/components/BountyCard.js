@@ -15,6 +15,7 @@ import red from '@material-ui/core/colors/red';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BountyCardMenu from './BountyCardMenu';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = theme => ({
   card: {
@@ -50,7 +51,7 @@ const styles = theme => ({
   },
   avatar: {
     backgroundColor: red[500],
-  },
+  }
 });
 
 class RecipeReviewCard extends React.Component {
@@ -73,9 +74,12 @@ class RecipeReviewCard extends React.Component {
       <Card className={classes.card}>
         <CardHeader
           avatar={
-            <Avatar aria-label="Recipe" className={classes.avatar}>
-              {createdBy[0]}
-            </Avatar>
+
+            <Tooltip title={createdBy}>
+              <Avatar aria-label="Recipe" className={classes.avatar}>
+                {createdBy[0]}
+              </Avatar>
+            </Tooltip>
           }
           action={
             <BountyCardMenu />
@@ -87,7 +91,10 @@ class RecipeReviewCard extends React.Component {
 
         <CardActions className={classes.actions} disableActionSpacing>
           <IconButton aria-label="Add to favorites">
-            <FavoriteIcon color={this.state.endorsed ? "primary" : 'grey'} />
+            {this.state.endorsed ?
+              <FavoriteIcon color='primary' /> :
+              <FavoriteIcon />
+            }
           </IconButton>
           <Typography>
             {endorsements.length}

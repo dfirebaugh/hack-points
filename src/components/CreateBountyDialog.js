@@ -43,7 +43,7 @@ class FullScreenDialog extends React.Component {
   };
 
   componentDidMount() {
-    console.log(this.props.title, this.props.description)
+    // console.log(this.props.title, this.props.description)
   }
   handleClickOpen = () => {
     this.setState({ open: true });

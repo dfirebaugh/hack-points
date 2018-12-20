@@ -40,19 +40,3 @@ You will need to setup an oauth token with
  - as bounties gain weight/point value, they get fatter in the UI
 
  - teams total score can be calculated by adding up all points and is visible at all times
-
-
-### API
-`/api/users/` -- returns all users
-
-`/api/users/:userid` -- returns specific user based on id
-
-`/api/users/me` -- returns information about current logged on user
-
-`/api/users/totalPoints` -- returns the totalPoints of all users
-
-`/api/bounties/` -- returns all bounties
-
-`/api/bounties/:bountyid` -- returns specific bounty based on id
-
-`/api/bounties/:bountyid/endorse` -- adds your endorsement on a bounty

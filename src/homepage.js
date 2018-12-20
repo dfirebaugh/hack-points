@@ -17,6 +17,7 @@ import Button from '@material-ui/core/Button';
 import BountyCard from './components/BountyCard';
 import CreateBountyDialog from './components/CreateBountyDialog';
 import Profile from './components/Profile';
+import Login from './components/Login';
 import fakeData from './fakeData';
 
 const drawerWidth = 240;
@@ -109,6 +110,7 @@ class Index extends React.Component {
     open: false, profile: false
   };
   componentDidMount = () => {
+    console.log(`${process.env.APP_URL}api/users/totalPoints/`)
     fetch(`${process.env.APP_URL}api/users/totalPoints/`, { credentials: 'same-origin' })
       .then(response => response.json())
       .then(responseJson => {
@@ -146,12 +148,14 @@ class Index extends React.Component {
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </div>
+
         <Divider />
         <CreateBountyDialog label="Create A Bounty" menuItem />
         <Divider />
         <Profile label="Profile" menuItem />
         <Divider />
-        <MenuItem>{true ? "Login" : "Logout"}</MenuItem>
+        <Login label="Login" menuItem />
+        {/* <MenuItem>{true ? "Login" : "Logout"}</MenuItem> */}
       </Drawer>
     );
 

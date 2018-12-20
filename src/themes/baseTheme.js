@@ -41,6 +41,7 @@ const palette = createPalette({
   },
 });
 const typography = createTypography(palette, {
+  useNextVariants: true,
   fontFamily: "'Nunito Sans', sans-serif;",
   // fontFamily: "'Roboto', sans-serif;",
 });
