@@ -19,6 +19,7 @@ import CreateBountyDialog from './components/CreateBountyDialog';
 import Profile from './components/Profile';
 import Login from './components/Login';
 import fakeData from './fakeData';
+import Auth from './services/Auth';
 
 const drawerWidth = 240;
 
@@ -107,7 +108,9 @@ const styles = theme => ({
 
 class Index extends React.Component {
   state = {
-    open: false, profile: false
+    open: false,
+    profile: false,
+    bounties: false,
   };
   componentDidMount = () => {
     console.log(`${process.env.APP_URL}api/users/totalPoints/`)
@@ -117,6 +120,15 @@ class Index extends React.Component {
         this.setState({
           totalPoints: responseJson,
         });
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+    fetch(`${process.env.APP_URL}api/bounties/`, { credentials: 'same-origin' })
+      .then(response => response.json())
+      .then(responseJson => {
+        this.setState({ bounties: responseJson || fakeData })
       })
       .catch(error => {
         console.error(error);
@@ -131,9 +143,37 @@ class Index extends React.Component {
     this.setState({ open: false });
   };
 
+  handleLogin = (email, password) => {
+    console.log('login', Auth.getToken())
+    const loginURI = 'http://localhost:8080/login'
+    const postData = {
+      email: email,
+      password: password
+    }
+
+    if (!Auth.isAuthenticated()) {
+      fetch(loginURI, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(postData)
+
+      })
+        .then(data => data.json())
+        .then(x => {
+          this.setState({
+            token: x
+          })
+          Auth.setSession(x)
+        })
+    }
+
+  }
+
   render() {
     const { classes, theme } = this.props;
-    const { open } = this.state;
+    const { open, bounties } = this.state;
 
     const drawer = (
       <Drawer
@@ -154,12 +194,16 @@ class Index extends React.Component {
         <Divider />
         <Profile label="Profile" menuItem />
         <Divider />
-        <Login label="Login" menuItem />
+        <Login
+          label="Login"
+          menuItem
+          loggedIn={() => Auth.isAuthenticated()}
+          handleLogIn={this.handleLogin} />
         {/* <MenuItem>{true ? "Login" : "Logout"}</MenuItem> */}
       </Drawer>
     );
 
-    const bounties = <main
+    const bountyList = <main
       className={classNames(classes.content, classes[`content-left`], {
         [classes.contentShift]: open,
         [classes[`contentShift-left`]]: open,
@@ -172,7 +216,7 @@ class Index extends React.Component {
         <Button color="primary" className={classes.button}>Votes</Button>
       </Typography>
       <div className={classes.cards}>
-        {fakeData.map((x, i) => <BountyCard key={x + i} {...x} currentUser="Dustin" />)}
+        {bounties && bounties.map((x, i) => <BountyCard key={x + i} {...x} currentUser="Dustin" />)}
       </div>
       <CreateBountyDialog label="Create A Bounty" />
     </main>
@@ -202,7 +246,7 @@ class Index extends React.Component {
             </Toolbar>
           </AppBar>
           {drawer}
-          {bounties}
+          {bountyList}
         </div>
       </MuiThemeProvider>
 

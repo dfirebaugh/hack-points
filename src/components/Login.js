@@ -125,12 +125,32 @@ class FullScreenDialog extends React.Component {
     open: false,
   };
 
+  componentWillUpdate() {
+  }
+  componentDidMount() {
+    this.isLoggedIn();
+  }
+
+  isLoggedIn() {
+    if (this.props.loggedIn && this.state.open === true) {
+      this.setState({
+        open: false
+      })
+    }
+    else {
+      this.setState({
+        open: true
+      })
+    }
+  }
+
   handleClickOpen = () => {
     this.setState({ open: true });
   };
 
   handleClose = () => {
     this.setState({ open: false });
+    this.isLoggedIn();
   };
   handleChange = name => event => {
     this.setState({
@@ -139,7 +159,8 @@ class FullScreenDialog extends React.Component {
   };
 
   handleSubmit = () => {
-    console.log(this.state.username, this.state.password)
+    this.props.handleLogIn(this.state.username, this.state.password)
+    // console.log(this.state.username, this.state.password)
   }
 
 
