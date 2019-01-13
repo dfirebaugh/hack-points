@@ -6,7 +6,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -17,7 +16,7 @@ import Button from '@material-ui/core/Button';
 import BountyCard from './components/BountyCard';
 import CreateBountyDialog from './components/CreateBountyDialog';
 import Profile from './components/Profile';
-import Login from './components/Login';
+import Login from './components/LoginDrawer';
 import fakeData from './fakeData';
 import Auth from './services/Auth';
 
@@ -111,21 +110,36 @@ class Index extends React.Component {
     open: false,
     profile: false,
     bounties: false,
+    token: null
   };
   componentDidMount = () => {
-    console.log(`${process.env.APP_URL}api/users/totalPoints/`)
-    fetch(`${process.env.APP_URL}api/users/totalPoints/`, { credentials: 'same-origin' })
-      .then(response => response.json())
-      .then(responseJson => {
-        this.setState({
-          totalPoints: responseJson,
-        });
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    console.log(`http://localhost:8081/api/users/totalPoints/`)
 
-    fetch(`${process.env.APP_URL}api/bounties/`, { credentials: 'same-origin' })
+    this.fetchBounties()
+  };
+
+  fetchBounties = () => {
+    // fetch(`http://localhost:8080/api/users/totalPoints/`, {
+    //   credentials: 'same-origin'
+    // })
+    //   .then(response => {
+    //     console.log(response)
+    //     response.json()
+    //   })
+    //   .then(responseJson => {
+    //     this.setState({
+    //       totalPoints: responseJson,
+    //     });
+    //   })
+    //   .catch(error => {
+    //     console.error(error);
+    //   });
+
+    fetch(`http://localhost:8080/api/bounties/`, {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    })
       .then(response => response.json())
       .then(responseJson => {
         this.setState({ bounties: responseJson || fakeData })
@@ -133,7 +147,7 @@ class Index extends React.Component {
       .catch(error => {
         console.error(error);
       });
-  };
+  }
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -168,7 +182,6 @@ class Index extends React.Component {
           Auth.setSession(x)
         })
     }
-
   }
 
   render() {
@@ -197,7 +210,7 @@ class Index extends React.Component {
         <Login
           label="Login"
           menuItem
-          loggedIn={() => Auth.isAuthenticated()}
+          loggedIn={this.state.token !== null}
           handleLogIn={this.handleLogin} />
         {/* <MenuItem>{true ? "Login" : "Logout"}</MenuItem> */}
       </Drawer>
@@ -211,10 +224,10 @@ class Index extends React.Component {
     >
       <div className={classes.drawerHeader} />
       <Typography > Create Bounty, Complete a Bounty, or Upvote a Bounty </Typography>
-      <Typography> Sort By:
+      {/* <Typography> Sort By:
       <Button color="primary" className={classes.button}>Age</Button>
         <Button color="primary" className={classes.button}>Votes</Button>
-      </Typography>
+      </Typography> */}
       <div className={classes.cards}>
         {bounties && bounties.map((x, i) => <BountyCard key={x + i} {...x} currentUser="Dustin" />)}
       </div>

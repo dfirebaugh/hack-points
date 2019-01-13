@@ -6,13 +6,11 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import TextField from "@material-ui/core/TextField";
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
+import UserLogin from './UserLogin';
 
 
 const styles = theme => ({
@@ -61,61 +59,6 @@ const styles = theme => ({
   }
 });
 
-
-
-
-const UserLogin = props => {
-  const { classes, handleSubmit, handleChange, username, password } = props;
-  return (
-    <Grid container justify="center">
-      <Grid item>
-        <Paper className={classes.paper}>
-
-          <img className={classes.logo} src="/Hackrobot.jpg" />
-          <div onKeyPress={props.handleKeyPress}>
-            <MenuItem className={classes.menuItem} disableRipple>
-              <TextField
-                className={classes.inputs}
-                value={username}
-                onChange={handleChange("username")}
-                label="username"
-                name="username"
-                type="text"
-                autoComplete="username"
-              // onKeyPress={props.handleKeyPress}
-              />
-            </MenuItem>
-            <MenuItem className={classes.menuItem} disableRipple>
-              <TextField
-                className={classes.inputs}
-                value={password}
-                onChange={handleChange("password")}
-                label="password"
-                type="password"
-                autoComplete="password"
-              // onKeyPress={props.handleKeyPress}
-              />
-            </MenuItem>
-
-            <MenuItem className={classes.menuItem} disableRipple>
-              <Button
-                className={classes.button}
-                variant="raised"
-                color="primary"
-                disableRipple
-                onClick={handleSubmit}
-              >
-                Login
-        </Button>
-            </MenuItem>
-          </div>
-        </Paper>
-      </Grid>
-    </Grid>
-  )
-}
-
-
 function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
@@ -125,32 +68,12 @@ class FullScreenDialog extends React.Component {
     open: false,
   };
 
-  componentWillUpdate() {
-  }
-  componentDidMount() {
-    this.isLoggedIn();
-  }
-
-  isLoggedIn() {
-    if (this.props.loggedIn && this.state.open === true) {
-      this.setState({
-        open: false
-      })
-    }
-    else {
-      this.setState({
-        open: true
-      })
-    }
-  }
-
   handleClickOpen = () => {
     this.setState({ open: true });
   };
 
   handleClose = () => {
     this.setState({ open: false });
-    this.isLoggedIn();
   };
   handleChange = name => event => {
     this.setState({
@@ -160,9 +83,9 @@ class FullScreenDialog extends React.Component {
 
   handleSubmit = () => {
     this.props.handleLogIn(this.state.username, this.state.password)
+    this.handleClose()
     // console.log(this.state.username, this.state.password)
   }
-
 
   render() {
     const { classes } = this.props;

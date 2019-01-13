@@ -117,9 +117,7 @@ class RecipeReviewCard extends React.Component {
               {description}
             </Typography>
             <Button className={classes.completeBtn}>Complete</Button>
-
           </CardContent>
-
         </Collapse>
       </Card>
     );
