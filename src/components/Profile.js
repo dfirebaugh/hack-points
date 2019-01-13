@@ -1,4 +1,5 @@
 import React from 'react';
+import MustLogin from './MustLogin';
 import Auth from '../services/Auth';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -37,7 +38,14 @@ class Profile extends React.Component {
         "Content-Type": "application/json"
       })
     })
-      .then(response => response.json())
+      .then(response => {
+        if (response.status === 401) {
+          this.setState({ unauthenticated: true })
+        }
+        else {
+          return response.json()
+        }
+      })
       .then(responseJson => {
         this.setState({
           userInfo: responseJson,
@@ -48,20 +56,27 @@ class Profile extends React.Component {
       });
   };
 
+  handleAuthenticate = () => {
+    console.log('hello')
+    this.setState({ unauthenticated: false })
+  }
+
   render = () => {
-    this.state && console.log(this.state.userInfo);
     return (
       <div>
         {this.state && (
           <div>
-            <div className="container jumbotron">
-              <div className="github-profile">
-                <img alt="user-img" src={this.state.userInfo.img} />
-                <p>Display Name: {this.state.userInfo.name}</p>
-                <p>Email: {this.state.userInfo.email}</p>
-                <p>Points: {this.state.userInfo.hackPoints} </p>
-              </div>
-            </div>
+            {!this.state.unauthenticated ?
+              <div className="container jumbotron">
+                <div className="github-profile">
+                  <img alt="user-img" src={this.state.userInfo.img} />
+                  <p>Display Name: {this.state.userInfo.name}</p>
+                  <p>Email: {this.state.userInfo.email}</p>
+                  <p>Points: {this.state.userInfo.hackPoints} </p>
+                </div>
+              </div> :
+              <MustLogin action={this.handleAuthenticate} />
+            }
           </div>
         )}
       </div>
