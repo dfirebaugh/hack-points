@@ -1,4 +1,5 @@
 import React from 'react';
+import Auth from '../services/Auth';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -28,10 +29,14 @@ const styles = {
   }
 };
 
-
 class Profile extends React.Component {
   componentDidMount = () => {
-    fetch(`${process.env.APP_URL}api/users/me/`, { credentials: 'same-origin' })
+    fetch(`http://localhost:8080/api/users/me/`, {
+      headers: new Headers({
+        'Authorization': `bearer ${Auth.getToken()}`,
+        "Content-Type": "application/json"
+      })
+    })
       .then(response => response.json())
       .then(responseJson => {
         this.setState({
@@ -51,7 +56,7 @@ class Profile extends React.Component {
           <div>
             <div className="container jumbotron">
               <div className="github-profile">
-                <img src={this.state.userInfo.img} />
+                <img alt="user-img" src={this.state.userInfo.img} />
                 <p>Display Name: {this.state.userInfo.name}</p>
                 <p>Email: {this.state.userInfo.email}</p>
                 <p>Points: {this.state.userInfo.hackPoints} </p>
@@ -74,9 +79,6 @@ class FullScreenDialog extends React.Component {
     open: false,
   };
 
-  componentDidMount() {
-    // console.log(this.props.title, this.props.description)
-  }
   handleClickOpen = () => {
     this.setState({ open: true });
   };
