@@ -16,6 +16,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BountyCardMenu from './BountyCardMenu';
 import Tooltip from '@material-ui/core/Tooltip';
+import Auth from '../services/Auth';
 
 const styles = theme => ({
   card: {
@@ -65,6 +66,13 @@ class RecipeReviewCard extends React.Component {
     this.setState(state => ({ expanded: !state.expanded }));
   };
 
+  handleEndorseClick = () => {
+    console.log('clicked endorse')
+
+    this.setState({ endorsed: !this.state.endorsed })
+
+  }
+
   render() {
     const { classes, currentUser, title, createdBy, img, dateCreated: date, dateCompleted, completedBy, message: description, status, endorsements } = this.props;
 
@@ -90,14 +98,14 @@ class RecipeReviewCard extends React.Component {
 
 
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Add to favorites">
+          <IconButton onClick={this.handleEndorseClick} aria-label="Add to favorites">
             {this.state.endorsed ?
               <FavoriteIcon color='primary' /> :
               <FavoriteIcon />
             }
           </IconButton>
           <Typography>
-            {endorsements.length}
+            {this.state.endorsed ? endorsements.length + 1 : endorsements.length}
           </Typography>
 
           <IconButton
