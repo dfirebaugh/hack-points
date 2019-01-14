@@ -39,8 +39,14 @@ class SimpleMenu extends React.Component {
           onClose={this.handleClose}
         >
           <MenuItem onClick={this.handleClose}>Complete</MenuItem>
-          <CreateBountyDialog label="Edit" menuItem />
-          <DeleteBountyDialog />
+          <CreateBountyDialog
+            label="Edit"
+            menuItem
+            title={this.props.title}
+            description={this.props.message}
+            {...this.props}
+          />
+          <DeleteBountyDialog id={this.props._id} />
         </Menu>
       </div>
     );

@@ -33,7 +33,7 @@ class ResponsiveDialog extends React.Component {
   };
   handleSubmit = () => {
     this.handleClose()
-    this.props.createBounty()
+    this.props.createBounty(this.props.title, this.props.description)
   }
 
   render() {
@@ -51,12 +51,12 @@ class ResponsiveDialog extends React.Component {
           <DialogTitle id="responsive-dialog-title">{"Are you sure you want to create this bounty?"}</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              <p>
+              <span>
                 Title: {this.props.title}
-              </p>
-              <p>
+              </span>
+              <span>
                 Description: {this.props.description}
-              </p>
+              </span>
             </DialogContentText>
           </DialogContent>
           <DialogActions>

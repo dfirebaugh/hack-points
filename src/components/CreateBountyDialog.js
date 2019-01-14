@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Auth from '../services/Auth';
 import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
@@ -42,8 +43,8 @@ class FullScreenDialog extends React.Component {
     open: false,
   };
 
-  componentDidMount() {
-    // console.log(this.props.title, this.props.description)
+  componentDidMount = () => {
+    console.log(this.props)
   }
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -58,8 +59,39 @@ class FullScreenDialog extends React.Component {
     });
   };
 
-  createBounty = () => {
+  /* {"err":"Bounty validation failed: 
+  message: Path `message` is required., 
+  status: Path `status` is required., 
+  createdBy: Path `createdBy` is required., 
+  createdIcon: Path `createdIcon` is required.",
+  "id":"5c3bfc77bf0120001af165ff"}
+  */
+  createBounty = (title, description) => {
     this.handleClose()
+    fetch(`http://localhost:8080/api/bounties`, {
+      method: "POST",
+      headers: {
+        'Authorization': `bearer ${Auth.getToken()}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        title: title,
+        message: description,
+        createdBy: this.props.currentUser,
+        status: "PENDING",
+
+      })
+    })
+      .then(() => {
+        if (this.props._id) {
+          fetch(`http://localhost:8080/api/bounties/${this.props._id}`, {
+            method: "DELETE",
+            headers: {
+              'Authorization': `bearer ${Auth.getToken()}`
+            }
+          })
+        }
+      })
   }
 
   render() {
@@ -99,6 +131,7 @@ class FullScreenDialog extends React.Component {
             <TextField
               id="outlined-uncontrolled"
               label="Title"
+              defaultValue={this.props.title}
               className={classes.textField}
               onChange={this.handleChange('title')}
               margin="normal"
@@ -110,6 +143,7 @@ class FullScreenDialog extends React.Component {
             <TextField
               id="outlined-multiline-flexible"
               label="Description"
+              defaultValue={this.props.description}
               multiline
               rowsMax="25"
               value={this.state.multiline}

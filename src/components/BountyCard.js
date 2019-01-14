@@ -70,14 +70,21 @@ class RecipeReviewCard extends React.Component {
     console.log('clicked endorse')
 
     this.setState({ endorsed: !this.state.endorsed })
+    // fetch(`http://localhost:8080/api/bounties/${this.props._id}/endorse`, {
+    //   method: 'POST',
+    //   headers: new Headers({
+    //     'Authorization': 'Bearer ' + Auth.getToken(),
+    //     'Content-Type': 'application/json'
+    //   })
+    // })
 
   }
 
   render() {
     const { classes, currentUser, title, createdBy, img, dateCreated: date, dateCompleted, completedBy, message: description, status, endorsements } = this.props;
 
-
-
+    // const by = JSON.parse(createdBy)
+    createdBy.name && console.log("createdBy?: ", createdBy.name)
     return (
       <Card className={classes.card}>
         <CardHeader
@@ -90,7 +97,7 @@ class RecipeReviewCard extends React.Component {
             </Tooltip>
           }
           action={
-            <BountyCardMenu />
+            <BountyCardMenu {...this.props} />
           }
           title={title}
           subheader={date}
