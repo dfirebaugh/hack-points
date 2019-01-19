@@ -34,6 +34,7 @@ class ResponsiveDialog extends React.Component {
   };
 
   handleClose = () => {
+    this.props.fetchBounties();
     this.setState({ open: false });
   };
 

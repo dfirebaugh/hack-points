@@ -202,7 +202,10 @@ class Index extends React.Component {
         </div>
 
         <Divider />
-        <CreateBountyDialog label="Create A Bounty" menuItem />
+        <CreateBountyDialog
+          fetchBounties={this.fetchBounties}
+          label="Create A Bounty"
+          menuItem />
         <Divider />
         <Profile label="Profile" menuItem />
         <Divider />
@@ -228,9 +231,9 @@ class Index extends React.Component {
         <Button color="primary" className={classes.button}>Votes</Button>
       </Typography> */}
       <div className={classes.cards}>
-        {bounties && bounties.map((x, i) => <BountyCard key={x + i} {...x} currentUser="Dustin" />)}
+        {bounties && bounties.map((x, i) => <BountyCard fetchBounties={this.fetchBounties} key={x + i} {...x} currentUser="Dustin" />)}
       </div>
-      <CreateBountyDialog label="Create A Bounty" />
+      <CreateBountyDialog fetchBounties={this.fetchBounties} label="Create A Bounty" />
     </main>
 
     return (

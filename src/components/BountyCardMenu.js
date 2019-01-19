@@ -43,10 +43,11 @@ class SimpleMenu extends React.Component {
             label="Edit"
             menuItem
             title={this.props.title}
+            fetchBounties={this.props.fetchBounties}
             description={this.props.message}
             {...this.props}
           />
-          <DeleteBountyDialog id={this.props._id} />
+          <DeleteBountyDialog fetchBounties={this.props.fetchBounties} id={this.props._id} />
         </Menu>
       </div>
     );

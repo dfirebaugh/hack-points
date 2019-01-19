@@ -15,13 +15,13 @@ module.exports = {
   delete: (req, res) => {
     Bounty.findOneAndDelete(
       {
-        _id: ObjectID(req.body.id),
+        _id: req.params.bountyid,
       },
       (err, bounty) => {
         if (err) return res.status(500).send(err);
         const response = {
           message: "Bounty successfully deleted",
-          id: req.body.id
+          id: req.params.bountyid
         };
         return res.status(200).send(response);
       })

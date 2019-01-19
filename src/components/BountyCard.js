@@ -81,7 +81,7 @@ class RecipeReviewCard extends React.Component {
   }
 
   render() {
-    const { classes, currentUser, title, createdBy, img, dateCreated: date, dateCompleted, completedBy, message: description, status, endorsements } = this.props;
+    const { classes, fetchBounties, currentUser, title, createdBy, img, dateCreated: date, dateCompleted, completedBy, message: description, status, endorsements } = this.props;
     return (
       <Card className={classes.card}>
         <CardHeader

@@ -52,6 +52,7 @@ class FullScreenDialog extends React.Component {
 
   handleClose = () => {
     this.setState({ open: false });
+    this.props.fetchBounties();
   };
   handleChange = name => event => {
     this.setState({
@@ -67,7 +68,6 @@ class FullScreenDialog extends React.Component {
   "id":"5c3bfc77bf0120001af165ff"}
   */
   createBounty = (title, description) => {
-    this.handleClose()
     fetch(`/api/bounties`, {
       method: "POST",
       headers: {
@@ -82,16 +82,7 @@ class FullScreenDialog extends React.Component {
 
       })
     })
-      .then(() => {
-        if (this.props._id) {
-          fetch(`/api/bounties/${this.props._id}`, {
-            method: "DELETE",
-            headers: {
-              'Authorization': `bearer ${Auth.getToken()}`
-            }
-          })
-        }
-      })
+      .then(this.handleClose)
   }
 
   render() {
