@@ -82,9 +82,6 @@ class RecipeReviewCard extends React.Component {
 
   render() {
     const { classes, currentUser, title, createdBy, img, dateCreated: date, dateCompleted, completedBy, message: description, status, endorsements } = this.props;
-
-    // const by = JSON.parse(createdBy)
-    createdBy.name && console.log("createdBy?: ", createdBy.name)
     return (
       <Card className={classes.card}>
         <CardHeader

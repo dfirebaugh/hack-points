@@ -1,4 +1,5 @@
 import React from 'react';
+import Auth from '../services/Auth';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -36,6 +37,17 @@ class ResponsiveDialog extends React.Component {
     this.setState({ open: false });
   };
 
+  handleDelete = () => {
+    console.log(this.props)
+    fetch(`http://localhost:8080/api/bounties/${this.props.id}`, {
+      method: "DELETE",
+      headers: {
+        'Authorization': `bearer ${Auth.getToken()}`
+      },
+      body: JSON.stringify({ id: this.props.id })
+    }).then(this.handleClose)
+  }
+
   render() {
     const { classes, fullScreen } = this.props;
 
@@ -61,7 +73,7 @@ class ResponsiveDialog extends React.Component {
             <Button onClick={this.handleClose} className={classes.button} color="secondary" autoFocus>
               CANCEL
             </Button>
-            <Button onClick={this.handleClose} className={classes.danger} color="secondary" autoFocus>
+            <Button onClick={this.handleDelete} className={classes.danger} color="secondary" autoFocus>
               DELETE
             </Button>
           </DialogActions>
