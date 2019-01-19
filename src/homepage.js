@@ -109,13 +109,30 @@ class Index extends React.Component {
     open: false,
     profile: false,
     bounties: false,
-    token: null
+    token: null,
+    currentUser: 'notLoggedIn'
   };
   componentDidMount = () => {
-    console.log(`http://localhost:8080/api/users/totalPoints/`)
-
-    this.fetchBounties()
+    this.getCurrentUser();
+    this.fetchBounties();
   };
+  getCurrentUser = () => {
+    fetch(`/api/users/me/`, {
+      headers: new Headers({
+        'Authorization': `bearer ${Auth.getToken()}`,
+        "Content-Type": "application/json"
+      })
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        this.setState({
+          currentUser: responseJson
+        });
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
 
   fetchBounties = () => {
     // fetch(`/api/users/totalPoints/`, {
@@ -231,7 +248,7 @@ class Index extends React.Component {
         <Button color="primary" className={classes.button}>Votes</Button>
       </Typography> */}
       <div className={classes.cards}>
-        {bounties && bounties.map((x, i) => <BountyCard fetchBounties={this.fetchBounties} key={x + i} {...x} currentUser="Dustin" />)}
+        {bounties && bounties.map((x, i) => <BountyCard fetchBounties={this.fetchBounties} key={x + i} {...x} currentUser={this.state.currentUser} />)}
       </div>
       <CreateBountyDialog fetchBounties={this.fetchBounties} label="Create A Bounty" />
     </main>

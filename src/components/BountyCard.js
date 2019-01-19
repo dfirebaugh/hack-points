@@ -82,6 +82,8 @@ class RecipeReviewCard extends React.Component {
 
   render() {
     const { classes, fetchBounties, currentUser, title, createdBy, img, dateCreated: date, dateCompleted, completedBy, message: description, status, endorsements } = this.props;
+    const userObj = createdBy;
+
     return (
       <Card className={classes.card}>
         <CardHeader
@@ -89,7 +91,7 @@ class RecipeReviewCard extends React.Component {
 
             <Tooltip title={createdBy}>
               <Avatar aria-label="Recipe" className={classes.avatar}>
-                {createdBy[0]}
+                {createdBy.name}
               </Avatar>
             </Tooltip>
           }
