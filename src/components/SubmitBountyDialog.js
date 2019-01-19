@@ -50,7 +50,11 @@ class ResponsiveDialog extends React.Component {
         >
           <DialogTitle id="responsive-dialog-title">{"Are you sure you want to create this bounty?"}</DialogTitle>
           <DialogContent>
-            <DialogContentText>
+            <DialogContentText style={{
+              display: "flex",
+              flexWrap: 'wrap',
+              width: '12em'
+            }}>
               <span>
                 Title: {this.props.title}
               </span>

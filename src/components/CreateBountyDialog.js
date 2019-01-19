@@ -79,7 +79,6 @@ class FullScreenDialog extends React.Component {
         message: description,
         createdBy: this.props.currentUser,
         status: "PENDING",
-
       })
     })
       .then(this.handleClose)
