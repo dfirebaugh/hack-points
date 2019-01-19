@@ -6,7 +6,7 @@ import { checkPropTypes } from 'prop-types';
 
 const MustLogin = props => {
   const handleLogin = (email, password) => {
-    const loginURI = 'http://localhost:8080/login'
+    const loginURI = '/login'
     const postData = {
       email: email,
       password: password

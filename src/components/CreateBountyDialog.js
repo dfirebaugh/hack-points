@@ -68,7 +68,7 @@ class FullScreenDialog extends React.Component {
   */
   createBounty = (title, description) => {
     this.handleClose()
-    fetch(`http://localhost:8080/api/bounties`, {
+    fetch(`/api/bounties`, {
       method: "POST",
       headers: {
         'Authorization': `bearer ${Auth.getToken()}`,
@@ -84,7 +84,7 @@ class FullScreenDialog extends React.Component {
     })
       .then(() => {
         if (this.props._id) {
-          fetch(`http://localhost:8080/api/bounties/${this.props._id}`, {
+          fetch(`/api/bounties/${this.props._id}`, {
             method: "DELETE",
             headers: {
               'Authorization': `bearer ${Auth.getToken()}`

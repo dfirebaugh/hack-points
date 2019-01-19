@@ -70,7 +70,7 @@ class RecipeReviewCard extends React.Component {
     console.log('clicked endorse')
 
     this.setState({ endorsed: !this.state.endorsed })
-    // fetch(`http://localhost:8080/api/bounties/${this.props._id}/endorse`, {
+    // fetch(`api/bounties/${this.props._id}/endorse`, {
     //   method: 'POST',
     //   headers: new Headers({
     //     'Authorization': 'Bearer ' + Auth.getToken(),

@@ -39,7 +39,7 @@ class ResponsiveDialog extends React.Component {
 
   handleDelete = () => {
     console.log(this.props)
-    fetch(`http://localhost:8080/api/bounties/${this.props.id}`, {
+    fetch(`/api/bounties/${this.props.id}`, {
       method: "DELETE",
       headers: {
         'Authorization': `bearer ${Auth.getToken()}`

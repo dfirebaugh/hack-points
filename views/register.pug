@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  div#login.container
+    div: form(method='post', class='form-vertical')
+      fieldset
+        legend: strong.text-info Register page
+
+        form(method='POST' action='/register')
+        div.form-group
+          label(for=name) Name:
+          input.form-control(name='name', autofocus)
+
+        div.form-group
+          label(for=email) email:
+          input.form-control(name='email', autofocus)
+
+        div.form-group
+          label(for=password) Password:
+          input.form-control(name='password', type='password')
+
+        div.form-actions
+          input.btn.btn-primary(type='submit', value='Register')

@@ -32,7 +32,7 @@ const styles = {
 
 class Profile extends React.Component {
   componentDidMount = () => {
-    fetch(`http://localhost:8080/api/users/me/`, {
+    fetch(`/api/users/me/`, {
       headers: new Headers({
         'Authorization': `bearer ${Auth.getToken()}`,
         "Content-Type": "application/json"

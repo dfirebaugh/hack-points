@@ -112,13 +112,13 @@ class Index extends React.Component {
     token: null
   };
   componentDidMount = () => {
-    console.log(`http://localhost:8081/api/users/totalPoints/`)
+    console.log(`http://localhost:8080/api/users/totalPoints/`)
 
     this.fetchBounties()
   };
 
   fetchBounties = () => {
-    // fetch(`http://localhost:8080/api/users/totalPoints/`, {
+    // fetch(`/api/users/totalPoints/`, {
     //   credentials: 'same-origin'
     // })
     //   .then(response => {
@@ -134,7 +134,7 @@ class Index extends React.Component {
     //     console.error(error);
     //   });
 
-    fetch(`http://localhost:8080/api/bounties/`, {
+    fetch(`/api/bounties/`, {
       headers: new Headers({
         'Content-Type': 'application/json'
       })
@@ -158,7 +158,7 @@ class Index extends React.Component {
 
   handleLogin = (email, password) => {
     console.log('login', Auth.getToken())
-    const loginURI = 'http://localhost:8080/login'
+    const loginURI = '/login'
     const postData = {
       email: email,
       password: password

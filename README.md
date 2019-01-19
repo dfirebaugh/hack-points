@@ -21,10 +21,10 @@ All users' points are added together to make up the Groups total points.
     >
     > PORT=8080
     >
-    > APP_URL=http://localhost:8080/
+    > APP_URL=/
 
 You will need to setup an oauth token with
-[slack](https://api.slack.com/docs/oauth)
+[slack](https:/api.slack.com/docs/oauth)
 
 
 * run `npm run dev` to spin up the webserver
