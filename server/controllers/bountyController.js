@@ -66,44 +66,26 @@ module.exports = {
     })
 
   },
-  endorse: (req, res) => {
+  toggleEndorse: (req, res) => {
     //find bounty add user to the endorsements array
     Bounty.findById(req.params.bountyid, (err, doc) => {
-      err && res.send(err);
-      doc.endorsements.includes(req.body.username) === false &&
-        doc.endorsements.push(req.body.username)
-      doc.save((err, result) => {
-        if (err) {
-          res.json({
-            err: err.message,
-            id: doc.id,
-          });
-        } else {
-          res.json({
-            message: 'Bounty point value has been decreased by one!',
-            id: doc.id,
-            endorsements: doc.endorsements
-          });
-        }
-      });
-    })
-  },
-  removeEndorse: (req, res) => {
-    //find bounty remove user to the endorsements array
-    Bounty.findById(req.params.bountyid, (err, doc) => {
-      err && res.send(err);
-      doc.endorsements.includes(req.body.username) === true &&
-        doc.endorsements.splice(doc.endorsements.indexOf(req.body.username), 1)
+      err && res.json({ message: err });
 
+      const endorsed = doc.endorsements.includes(req.user.id)
+      endorsed ?
+        doc.endorsements.splice(doc.endorsements.indexOf(req.user.id), 1) :
+        doc.endorsements.push(req.user.id);
       doc.save((err, result) => {
         if (err) {
           res.json({
+            message: err.message,
             err: err.message,
             id: doc.id,
           });
         } else {
+          const message = endorsed ? 'Removing endorsement!' : 'Adding endorsement!'
           res.json({
-            message: 'Bounty point value has been decreased by one!',
+            message: message,
             id: doc.id,
             endorsements: doc.endorsements
           });

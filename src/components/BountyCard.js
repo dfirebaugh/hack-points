@@ -56,10 +56,11 @@ const styles = theme => ({
 });
 
 class BountyCard extends React.Component {
-  state = { expanded: false, endorsed: false };
+  state = { expanded: false, endorsed: false, endorsements: [] };
   componentDidMount() {
     this.setState({
-      endorsed: this.props.endorsements.includes(this.props.currentUser)
+      endorsed: this.props.endorsements.includes(this.props.currentUser.id),
+      endorsements: this.props.endorsements
     })
   }
   handleExpandClick = () => {
@@ -67,17 +68,21 @@ class BountyCard extends React.Component {
   };
 
   handleEndorseClick = () => {
-    console.log('clicked endorse')
-
-    this.setState({ endorsed: !this.state.endorsed })
-    // fetch(`api/bounties/${this.props._id}/endorse`, {
-    //   method: 'POST',
-    //   headers: new Headers({
-    //     'Authorization': 'Bearer ' + Auth.getToken(),
-    //     'Content-Type': 'application/json'
-    //   })
-    // })
-
+    fetch(`api/bounties/${this.props._id}/endorse`, {
+      method: 'POST',
+      headers: new Headers({
+        'Authorization': 'Bearer ' + Auth.getToken(),
+        'Content-Type': 'application/json'
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          endorsed: data.endorsements.includes(this.props.currentUser.id),
+          endorsements: data.endorsements
+        })
+        this.props.handleSnack(data.message)
+      })
   }
 
   render() {
@@ -109,7 +114,8 @@ class BountyCard extends React.Component {
             }
           </IconButton>
           <Typography>
-            {this.state.endorsed ? endorsements.length + 1 : endorsements.length}
+            {this.state.endorsements.length}
+            {/* {this.state.endorsed ? endorsements.length + 1 : endorsements.length} */}
           </Typography>
 
           <IconButton

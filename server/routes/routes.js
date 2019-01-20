@@ -26,9 +26,7 @@ module.exports = (app, passport, express) => {
 		.put(passport.authenticate('jwt', { session: false }), bountyController.update);
 
 	app.route('/api/bounties/:bountyid/endorse')
-		.post(passport.authenticate('jwt', { session: false }), bountyController.endorse)
-	app.route('/api/bounties/:bountyid/removeEndorsement')
-		.post(passport.authenticate('jwt', { session: false }), bountyController.removeEndorse)
+		.post(passport.authenticate('jwt', { session: false }), bountyController.toggleEndorse)
 
 	app.route('/register')
 		.get(authController().register.get)
