@@ -13,18 +13,27 @@ module.exports = {
     })
   },
   delete: (req, res) => {
-    Bounty.findOneAndDelete(
-      {
-        _id: req.params.bountyid,
-      },
-      (err, bounty) => {
-        if (err) return res.status(500).send(err);
-        const response = {
-          message: "Bounty successfully deleted",
-          id: req.params.bountyid
-        };
-        return res.status(200).send(response);
-      })
+    Bounty.findOne({ _id: req.params.bountyid }, (err, doc) => {
+      if (String(req.user.id) === String(doc.createdBy.id)) {
+        Bounty.findOneAndDelete(
+          {
+            _id: req.params.bountyid,
+          },
+          (err, bounty) => {
+            if (err) return res.status(500).send(err);
+            const response = {
+              message: "Bounty successfully deleted",
+              id: req.params.bountyid
+            };
+            return res.status(200).send(response);
+          })
+      }
+      else {
+        res.json({
+          message: "You do not own this bounty!"
+        })
+      }
+    })
   },
   update: (req, res) => {
     const bountyUpdate = {
@@ -127,7 +136,7 @@ module.exports = {
         });
       } else {
         res.json({
-          message: 'success!',
+          message: 'Bounty created!',
           id: bounty.id,
         });
       }
