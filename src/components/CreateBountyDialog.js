@@ -45,6 +45,12 @@ class FullScreenDialog extends React.Component {
 
   componentDidMount = () => {
     console.log(this.props)
+    if (this.props._id) {
+      this.setState({
+        title: this.props.title,
+        description: this.props.description
+      })
+    }
   }
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -60,26 +66,22 @@ class FullScreenDialog extends React.Component {
     });
   };
 
-  /* {"err":"Bounty validation failed: 
-  message: Path `message` is required., 
-  status: Path `status` is required., 
-  createdBy: Path `createdBy` is required., 
-  createdIcon: Path `createdIcon` is required.",
-  "id":"5c3bfc77bf0120001af165ff"}
-  */
+
   createBounty = (title, description) => {
-    fetch(`/api/bounties`, {
-      method: "POST",
+    const body = {
+      title: title,
+      message: description,
+      status: "PENDING"
+    }
+
+
+    fetch(this.props._id ? `/api/bounties/${this.props._id}` : `/api/bounties`, {
+      method: this.props._id ? "PUT" : "POST",
       headers: {
         'Authorization': `bearer ${Auth.getToken()}`,
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({
-        title: title,
-        message: description,
-        createdBy: this.props.currentUser,
-        status: "PENDING",
-      })
+      body: JSON.stringify(body)
     })
       .then(this.handleClose)
   }

@@ -55,7 +55,7 @@ const styles = theme => ({
   }
 });
 
-class RecipeReviewCard extends React.Component {
+class BountyCard extends React.Component {
   state = { expanded: false, endorsed: false };
   componentDidMount() {
     this.setState({
@@ -82,16 +82,14 @@ class RecipeReviewCard extends React.Component {
 
   render() {
     const { classes, fetchBounties, currentUser, title, createdBy, img, dateCreated: date, dateCompleted, completedBy, message: description, status, endorsements } = this.props;
-    const userObj = createdBy;
-
     return (
       <Card className={classes.card}>
         <CardHeader
           avatar={
 
-            <Tooltip title={createdBy}>
+            <Tooltip title={createdBy.name}>
               <Avatar aria-label="Recipe" className={classes.avatar}>
-                {createdBy.name}
+                {createdBy.name && createdBy.name[0].toUpperCase()}
               </Avatar>
             </Tooltip>
           }
@@ -138,8 +136,8 @@ class RecipeReviewCard extends React.Component {
   }
 }
 
-RecipeReviewCard.propTypes = {
+BountyCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(RecipeReviewCard);
+export default withStyles(styles)(BountyCard);

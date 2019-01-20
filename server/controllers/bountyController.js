@@ -27,23 +27,31 @@ module.exports = {
       })
   },
   update: (req, res) => {
-    Bounty.findById(req.params.bountyid, (err, bounty) => {
-      if (err) {
-        res.send(err);
+    const bountyUpdate = {
+      title: req.body.title,
+      message: req.body.message
+    }
+
+    Bounty.findOne({ _id: req.params.bountyid }, (err, doc) => {
+      if (req.user.id !== doc.createdBy.id) {
+        Bounty.update({ _id: req.params.bountyid }, bountyUpdate, (err, raw) => {
+          if (err) {
+            res.send(err);
+          }
+          // save the bounty
+          res.json({
+            message: 'Bounty updated!',
+            update: raw
+          });
+        })
       }
-
-      if (req.headers.status) {
-        bounty.status = req.headers.status;
+      else {
+        res.json({
+          message: 'you did not create this bounty'
+        })
       }
-
-      bounty.points = req.headers.points;
-
-      // save the bounty
-      bounty.save(err => {
-        if (err) res.send(err);
-        res.json({ message: 'Bounty updated!' });
-      });
     })
+
   },
   endorse: (req, res) => {
     //find bounty add user to the endorsements array
@@ -104,7 +112,7 @@ module.exports = {
         id: _id
       },//req.body.createdBy,
       createdIcon: req.body.createdIcon,
-      endorsements: [req.body.endorsements]
+      endorsements: []
     });
 
     bounty.save((err, result) => {
