@@ -9,7 +9,7 @@ const joiBountySchema = Joi.object({
   title: Joi.string().required(),
   message: Joi.string().required(),
   status: Joi.string().required(),
-  createdBy: Joi.string().required(),
+  createdBy: Joi.object().required(),
   createdIcon: Joi.string(),
   completedBy: Joi.string(),
   dateCreated: Joi.string(),
