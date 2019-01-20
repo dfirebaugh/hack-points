@@ -47,13 +47,12 @@ class ResponsiveDialog extends React.Component {
       },
       body: JSON.stringify({ id: this.props.id })
     })
-      .then(data => {
+      .then(response => {
         this.handleClose()
-        console.log('response (delete) data: ', data)
-        if (data.status === 200) {
-          const msg = 'Successfully delete'
-          this.props.handleSnack(msg, 'success')
-        }
+        return response.json()
+      })
+      .then(data => {
+        this.props.handleSnack(data.message)
       })
   }
 

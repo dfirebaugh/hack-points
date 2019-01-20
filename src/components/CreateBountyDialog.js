@@ -83,13 +83,12 @@ class FullScreenDialog extends React.Component {
       },
       body: JSON.stringify(body)
     })
-      .then(data => {
-        console.log('response (create) data: ', data)
-        if (data.status === 200) {
-          const msg =this.props._id ? 'Bounty Edited' : 'Bounty Created'
-          this.props.handleSnack(msg, 'success')
-        }
+      .then(response => {
         this.handleClose()
+        return response.json();
+      })
+      .then(data => {
+        this.props.handleSnack(data.message)
       })
   }
 
