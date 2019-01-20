@@ -12,6 +12,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import MenuItem from '@material-ui/core/MenuItem';
+import Snackbar from '@material-ui/core/Snackbar';
 import BountyCard from './components/BountyCard';
 import CreateBountyDialog from './components/CreateBountyDialog';
 import Profile from './components/Profile';
@@ -107,10 +109,12 @@ const styles = theme => ({
 class Index extends React.Component {
   state = {
     open: false,
+    snackBarOpen: false,
     profile: false,
     bounties: false,
     token: null,
-    currentUser: 'notLoggedIn'
+    currentUser: 'notLoggedIn',
+    snackMessage: 'none'
   };
   componentDidMount = () => {
     this.getCurrentUser();
@@ -188,7 +192,13 @@ class Index extends React.Component {
       },
       body: JSON.stringify(postData)
 
-    })
+    }).then(() => this.handleSnack('Registered!  Please log in.'))
+  }
+
+  handleLogout = () => {
+    Auth.logout()
+    this.handleSnack('logged out')
+    console.log('LoggedOut', Auth.getToken())
   }
 
   handleLogin = (email, password) => {
@@ -214,10 +224,21 @@ class Index extends React.Component {
             token: x
           })
           Auth.setSession(x)
-        })
+        }).then(() => this.handleSnack('logged in'))
     }
   }
 
+  handleSnack = (msg, msgType) => {
+    this.setState({
+      snackBarOpen: true,
+      snackMessage: msg,
+      snackMessageType: msgType
+    })
+  }
+
+  handleSnackClose = () => {
+    this.setState({ snackBarOpen: false })
+  }
   render() {
     const { classes, theme } = this.props;
     const { open, bounties } = this.state;
@@ -238,6 +259,7 @@ class Index extends React.Component {
 
         <Divider />
         <CreateBountyDialog
+          handleSnack={this.handleSnack}
           fetchBounties={this.fetchBounties}
           label="Create A Bounty"
           menuItem />
@@ -250,7 +272,8 @@ class Index extends React.Component {
           loggedIn={this.state.token !== null}
           handleLogIn={this.handleLogin}
           handleRegister={this.handleRegister} />
-        {/* <MenuItem>{true ? "Login" : "Logout"}</MenuItem> */}
+        <Divider />
+        <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
       </Drawer>
     );
 
@@ -264,12 +287,16 @@ class Index extends React.Component {
       <Typography > Create Bounty, Complete a Bounty, or Upvote a Bounty </Typography>
       {/* <Typography> Sort By:
       <Button color="primary" className={classes.button}>Age</Button>
-        <Button color="primary" className={classes.button}>Votes</Button>
-      </Typography> */}
+      <Button color="primary" className={classes.button}>Votes</Button>
+    </Typography> */}
       <div className={classes.cards}>
-        {bounties && bounties.map((x, i) => <BountyCard fetchBounties={this.fetchBounties} key={x + i} {...x} currentUser={this.state.currentUser} />)}
+        {bounties && bounties.map((x, i) => <BountyCard
+          handleSnack={this.handleSnack}
+          fetchBounties={this.fetchBounties}
+          key={x + i} {...x}
+          currentUser={this.state.currentUser} />)}
       </div>
-      <CreateBountyDialog fetchBounties={this.fetchBounties} label="Create A Bounty" />
+      <CreateBountyDialog handleSnack={this.handleSnack} fetchBounties={this.fetchBounties} label="Create A Bounty" />
     </main>
 
     return (
@@ -298,6 +325,15 @@ class Index extends React.Component {
           </AppBar>
           {drawer}
           {bountyList}
+          <Snackbar
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            open={this.state.snackBarOpen}
+            onClose={this.handleSnackClose}
+            ContentProps={{
+              'aria-describedby': 'message-id',
+            }}
+            message={<span id="message-id">{this.state.snackMessage}</span>}
+          />
         </div>
       </MuiThemeProvider>
 

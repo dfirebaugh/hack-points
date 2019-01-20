@@ -46,7 +46,15 @@ class ResponsiveDialog extends React.Component {
         'Authorization': `bearer ${Auth.getToken()}`
       },
       body: JSON.stringify({ id: this.props.id })
-    }).then(this.handleClose)
+    })
+      .then(data => {
+        this.handleClose()
+        console.log('response (delete) data: ', data)
+        if (data.status === 200) {
+          const msg = 'Successfully delete'
+          this.props.handleSnack(msg, 'success')
+        }
+      })
   }
 
   render() {
