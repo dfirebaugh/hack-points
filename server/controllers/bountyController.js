@@ -33,7 +33,7 @@ module.exports = {
     }
 
     Bounty.findOne({ _id: req.params.bountyid }, (err, doc) => {
-      if (req.user.id !== doc.createdBy.id) {
+      if (String(req.user.id) === String(doc.createdBy.id)) {
         Bounty.update({ _id: req.params.bountyid }, bountyUpdate, (err, raw) => {
           if (err) {
             res.send(err);
