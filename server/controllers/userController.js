@@ -5,7 +5,13 @@ module.exports = {
     User.find({}, (err, doc) => res.send(doc))
   },
   getMe: (req, res) => {
-    res.send(req.user);
+    const { name, email, img, _id } = req.user;
+    res.send({
+      name,
+      email,
+      img,
+      id: _id
+    });
   },
   getUser: (req, res) => {
     User.findById(req.params.id, (err, doc) => res.send(doc))

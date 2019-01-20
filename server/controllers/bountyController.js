@@ -91,13 +91,18 @@ module.exports = {
     })
   },
   post: (req, res) => {
-
+    const { name, email, img, _id } = req.user;
     let bounty = new Bounty({
       title: req.body.title,
       message: req.body.message,
       status: req.body.status,
       pointValue: req.body.pointValue,
-      createdBy: req.user,//req.body.createdBy,
+      createdBy: {
+        name,
+        email,
+        img,
+        id: _id
+      },//req.body.createdBy,
       createdIcon: req.body.createdIcon,
       endorsements: [req.body.endorsements]
     });
