@@ -86,7 +86,10 @@ class FullScreenDialog extends React.Component {
     this.handleClose()
     // console.log(this.state.username, this.state.password)
   }
-
+  handleRegister = name => {
+    this.props.handleRegister(this.state.username, this.state.password, name)
+    this.handleClose()
+  }
   render() {
     const { classes } = this.props;
 
@@ -116,7 +119,8 @@ class FullScreenDialog extends React.Component {
           <UserLogin
             classes={classes}
             handleChange={this.handleChange}
-            handleSubmit={this.handleSubmit} />
+            handleSubmit={this.handleSubmit}
+            handleRegister={this.handleRegister} />
 
 
         </Dialog>

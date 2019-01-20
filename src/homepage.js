@@ -173,6 +173,24 @@ class Index extends React.Component {
     this.setState({ open: false });
   };
 
+  handleRegister = (email, password, name) => {
+    const registerURI = '/register'
+    const postData = {
+      email: email,
+      password: password,
+      name: name
+    }
+
+    fetch(registerURI, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(postData)
+
+    })
+  }
+
   handleLogin = (email, password) => {
     console.log('login', Auth.getToken())
     const loginURI = '/login'
@@ -230,7 +248,8 @@ class Index extends React.Component {
           label="Login"
           menuItem
           loggedIn={this.state.token !== null}
-          handleLogIn={this.handleLogin} />
+          handleLogIn={this.handleLogin}
+          handleRegister={this.handleRegister} />
         {/* <MenuItem>{true ? "Login" : "Logout"}</MenuItem> */}
       </Drawer>
     );
