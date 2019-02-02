@@ -5,6 +5,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import CreateBountyDialog from './CreateBountyDialog';
 import DeleteBountyDialog from './DeleteBountyDialog';
+import CompleteBountyDialog from './CompleteBountyDialog';
 
 class SimpleMenu extends React.Component {
   state = {
@@ -38,7 +39,15 @@ class SimpleMenu extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-          <MenuItem onClick={this.handleClose}>Complete</MenuItem>
+          <CompleteBountyDialog
+            label="Complete"
+            menuItem
+            title={this.props.title}
+            fetchBounties={this.props.fetchBounties}
+            description={this.props.message}
+            {...this.props}
+          />
+          {/* <MenuItem onClick={this.handleClose}>Complete</MenuItem> */}
           <CreateBountyDialog
             label="Edit"
             menuItem

@@ -42,16 +42,15 @@ const styles = theme => ({
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
     }),
-    marginLeft: 'auto',
-    [theme.breakpoints.up('sm')]: {
-      marginRight: -8,
-    },
+    marginLeft: 'auto'
   },
   expandOpen: {
     transform: 'rotate(180deg)',
   },
   avatar: {
     backgroundColor: red[500],
+  },
+  collapse: {
   }
 });
 

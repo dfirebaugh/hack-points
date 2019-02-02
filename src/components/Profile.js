@@ -3,6 +3,7 @@ import MustLogin from './MustLogin';
 import Auth from '../services/Auth';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Paper from "@material-ui/core/Paper";
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -27,6 +28,21 @@ const styles = {
     margin: '2vh',
     marginRight: '6vw',
     width: '80vw',
+  },
+  paperContainer: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "5em"
+  },
+  paper: {
+    width: "300px",
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center"
+  },
+  profileImage: {
+    marginTop: "2em"
   }
 };
 
@@ -63,13 +79,14 @@ class Profile extends React.Component {
 
   render = () => {
     return (
-      <div>
+      <div className={this.props.classes.paperContainer}>
         {this.state && (
-          <div>
+
+          <Paper className={this.props.classes.paper}>
             {!this.state.unauthenticated ?
               <div className="container jumbotron">
                 <div className="github-profile">
-                  <img alt="user-img" src={this.state.userInfo.img} />
+                  <img alt="user-img" src={this.state.userInfo.img} className={this.props.classes.profileImage} />
                   <p>Display Name: {this.state.userInfo.name}</p>
                   <p>Email: {this.state.userInfo.email}</p>
                   <p>Points: {this.state.userInfo.hackPoints} </p>
@@ -77,7 +94,7 @@ class Profile extends React.Component {
               </div> :
               <MustLogin action={this.handleAuthenticate} />
             }
-          </div>
+          </Paper>
         )}
       </div>
     );
@@ -137,7 +154,7 @@ class FullScreenDialog extends React.Component {
             </Toolbar>
           </AppBar>
 
-          <Profile />
+          <Profile classes={classes} />
 
         </Dialog>
       </div>

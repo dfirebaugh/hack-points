@@ -5,30 +5,7 @@ All users' points are added together to make up the Groups total points.
 [demo](http://dfirebaugh.github.io/hack-points)
 
 ### Project setup:
-* Download [mongodb](https://www.mongodb.com/download-center#community)
-* start `mongod --dbpath=<path to data>`  make sure this continues to run in the background
-* navigate to project root and run `npm install` to install dependencies
-* create a `.env` to store environmental variables:
-    > GITHUB_KEY=
-    >
-    > GITHUB_SECRET=
-    >
-    > SLACK_KEY=
-    >
-    > SLACK_SECRET=
-    >
-    > MONGO_URI=mongodb://localhost:27017/hackerpoints
-    >
-    > PORT=8080
-    >
-    > APP_URL=/
-
-You will need to setup an oauth token with
-[slack](https:/api.slack.com/docs/oauth)
-
-
-* run `npm run dev` to spin up the webserver
-
+* run command `docker-compose up --build` to start the app
 
 
 ### User Stories
