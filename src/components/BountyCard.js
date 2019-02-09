@@ -17,6 +17,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BountyCardMenu from './BountyCardMenu';
 import Tooltip from '@material-ui/core/Tooltip';
 import Auth from '../services/Auth';
+import CompleteBountyDialog from './CompleteBountyDialog';
 
 const styles = theme => ({
   card: {
@@ -133,7 +134,15 @@ class BountyCard extends React.Component {
             <Typography component="p">
               {description}
             </Typography>
-            <Button className={classes.completeBtn}>Complete</Button>
+            <CompleteBountyDialog
+              btnClass={classes.completeBtn}
+              label="Complete"
+              bountyId={this.props._id}
+              title={this.props.title}
+              fetchBounties={this.props.fetchBounties}
+              description={this.props.message}
+              {...this.props}
+            />
           </CardContent>
         </Collapse>
       </Card>

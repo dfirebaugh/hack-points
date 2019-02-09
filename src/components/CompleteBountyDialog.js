@@ -18,6 +18,7 @@ import SubmitBountyDialog from './SubmitBountyDialog';
 const styles = {
   appBar: {
     position: 'relative',
+    marginBottom: "2em"
   },
   flex: {
     flex: 1,
@@ -41,17 +42,9 @@ function Transition(props) {
 class FullScreenDialog extends React.Component {
   state = {
     open: false,
+    message: ""
   };
 
-  componentDidMount = () => {
-    console.log(this.props)
-    if (this.props._id) {
-      this.setState({
-        title: this.props.title,
-        description: this.props.description
-      })
-    }
-  }
   handleClickOpen = () => {
     this.setState({ open: true });
   };
@@ -60,23 +53,21 @@ class FullScreenDialog extends React.Component {
     this.setState({ open: false });
     this.props.fetchBounties();
   };
+
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
     });
   };
 
-
-  createBounty = (title, description) => {
+  completeBounty = () => {
     const body = {
-      title: title,
-      message: description,
-      status: "PENDING"
+      message: this.state.message,
+      status: "SUBMITTED"
     }
 
-
-    fetch(this.props._id ? `/api/bounties/${this.props._id}` : `/api/bounties`, {
-      method: this.props._id ? "PUT" : "POST",
+    fetch(`/api/bounties/${this.props._id}/submit`, {
+      method: "PUT",
       headers: {
         'Authorization': `bearer ${Auth.getToken()}`,
         "Content-Type": "application/json"
@@ -93,12 +84,12 @@ class FullScreenDialog extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, btnClass } = this.props;
     return (
       <div>
         {this.props.menuItem ?
           <MenuItem onClick={this.handleClickOpen}>{this.props.label}</MenuItem> :
-          <Button onClick={this.handleClickOpen}>{this.props.label}</Button>}
+          <Button className={btnClass} onClick={this.handleClickOpen}>{this.props.label}</Button>}
 
         <Dialog
           fullScreen
@@ -116,47 +107,39 @@ class FullScreenDialog extends React.Component {
               </Typography>
               <SubmitBountyDialog
                 title={this.state.title}
-                description={this.state.description}
+                bountyId={this.props.bountyId}
+                description={this.state.message}
+                message="Is this message what you want to submit?"
                 appBar
                 fullScreen={false}
                 color="inherit"
-                createBounty={this.createBounty}
+                createBounty={this.completeBounty}
                 onClick={this.handleClose} />
             </Toolbar>
           </AppBar>
 
           <form className={classes.container} noValidate autoComplete="off">
 
-            So you've completed the bounty? Enter a message and the creator so that the creator of the bounty can approve.
-            <TextField
-              id="outlined-uncontrolled"
-              label="Title"
-              defaultValue={this.props.title}
-              className={classes.textField}
-              onChange={this.handleChange('title')}
-              margin="normal"
-              variant="outlined"
-            />
-
-            <Divider />
+            So you've completed the bounty? Enter a message so that the creator of the bounty can approve.
 
             <TextField
               id="outlined-multiline-flexible"
-              label="Description"
-              defaultValue={this.props.description}
+              label="Message"
               multiline
               rowsMax="25"
               value={this.state.multiline}
-              onChange={this.handleChange('description')}
+              onChange={this.handleChange('message')}
               className={classes.textField}
               margin="normal"
               variant="outlined"
             />
             <SubmitBountyDialog
               title={this.state.title}
-              description={this.state.description}
+              bountyId={this.props.bountyId}
+              description={this.state.message}
+              message="Is this message what you want to submit?"
               fullScreen={false}
-              createBounty={this.createBounty}
+              completeBounty={this.completeBounty}
               onClick={this.handleClose} />
           </form>
 

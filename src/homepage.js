@@ -284,7 +284,7 @@ class Index extends React.Component {
       })}
     >
       <div className={classes.drawerHeader} />
-      <Typography > Create Bounty, Complete a Bounty, or Upvote a Bounty </Typography>
+      <Typography > Create a Bounty, Complete a Bounty, or Upvote a Bounty </Typography>
       {/* <Typography> Sort By:
       <Button color="primary" className={classes.button}>Age</Button>
       <Button color="primary" className={classes.button}>Votes</Button>

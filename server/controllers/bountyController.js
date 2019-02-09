@@ -66,6 +66,42 @@ module.exports = {
     })
 
   },
+  submit: (req, res) => {
+    const submissionMessage = {
+      message: req.body.message + ' - ' + req.user.name
+    }
+
+    res.json(submissionMessage)
+
+    // if (req.body.status) {
+    //   bountyUpdate.status = req.body.status;
+    // }
+
+    // Bounty.findOne({ _id: req.params.bountyid }, (err, doc) => {
+    //   if (String(req.user.id) === String(doc.createdBy.id)) {
+    //     Bounty.update({
+    //       _id: req.params.bountyid
+    //     },
+    //       {
+    //         $push: { "submissionBoard": submissionMessage }
+    //       }, (err, raw) => {
+    //         if (err) {
+    //           res.send(err);
+    //         }
+    //         // save the bounty
+    //         res.json({
+    //           message: 'Submission sent!',
+    //           update: raw
+    //         });
+    //       })
+    //   }
+    //   else {
+    //     res.json({
+    //       message: 'you did not create this bounty'
+    //     })
+    //   }
+    // })
+  },
   toggleEndorse: (req, res) => {
     //find bounty add user to the endorsements array
     Bounty.findById(req.params.bountyid, (err, doc) => {

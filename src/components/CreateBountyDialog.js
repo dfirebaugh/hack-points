@@ -116,6 +116,7 @@ class FullScreenDialog extends React.Component {
               </Typography>
               <SubmitBountyDialog
                 title={this.state.title}
+                bountyId={this.props.bountyId}
                 description={this.state.description}
                 appBar
                 fullScreen={false}
@@ -151,6 +152,7 @@ class FullScreenDialog extends React.Component {
               variant="outlined"
             />
             <SubmitBountyDialog
+              bountyId={this.props.bountyId}
               title={this.state.title}
               description={this.state.description}
               fullScreen={false}

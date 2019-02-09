@@ -33,11 +33,12 @@ class ResponsiveDialog extends React.Component {
   };
   handleSubmit = () => {
     this.handleClose()
-    this.props.createBounty(this.props.title, this.props.description)
+    this.props.completeBounty(this.props.title, this.props.description)
   }
 
   render() {
-    const { fullScreen, classes } = this.props;
+    const { fullScreen, classes, bountyId } = this.props;
+    const menuType = bountyId ? "edit" : "create"
 
     return (
       <div>
@@ -48,19 +49,28 @@ class ResponsiveDialog extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="responsive-dialog-title"
         >
-          <DialogTitle id="responsive-dialog-title">{"Are you sure you want to create this bounty?"}</DialogTitle>
+          <DialogTitle id="responsive-dialog-title">
+            {
+              this.props.message ? this.props.message :
+                `Are you sure you want to ${menuType} this bounty?`}
+          </DialogTitle>
           <DialogContent>
             <DialogContentText style={{
               display: "flex",
               flexWrap: 'wrap',
               width: '12em'
             }}>
-              <span>
-                Title: {this.props.title}
-              </span>
-              <span>
-                Description: {this.props.description}
-              </span>
+              {
+                this.props.message ? this.props.description :
+                  <div>
+                    <span>
+                      Title: {this.props.title}
+                    </span>
+                    <span>
+                      Description: {this.props.description}
+                    </span>
+                  </div>
+              }
             </DialogContentText>
           </DialogContent>
           <DialogActions>

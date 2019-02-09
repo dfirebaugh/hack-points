@@ -41,6 +41,7 @@ class SimpleMenu extends React.Component {
         >
           <CompleteBountyDialog
             label="Complete"
+            bountyId={this.props._id}
             menuItem
             title={this.props.title}
             fetchBounties={this.props.fetchBounties}
@@ -51,6 +52,7 @@ class SimpleMenu extends React.Component {
           <CreateBountyDialog
             label="Edit"
             menuItem
+            bountyId={this.props._id}
             title={this.props.title}
             fetchBounties={this.props.fetchBounties}
             description={this.props.message}
