@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import SubmitBountyDialog from './SubmitBountyDialog';
+import SubmissionBoard from './SubmissionBoard';
 
 const styles = {
   appBar: {
@@ -143,6 +144,7 @@ class FullScreenDialog extends React.Component {
               onClick={this.handleClose} />
           </form>
 
+          <SubmissionBoard {...this.props} />
         </Dialog>
       </div>
     );

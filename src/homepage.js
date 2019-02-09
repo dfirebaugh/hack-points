@@ -112,6 +112,7 @@ class Index extends React.Component {
     snackBarOpen: false,
     profile: false,
     bounties: false,
+    users: null,
     token: null,
     currentUser: 'notLoggedIn',
     snackMessage: 'none'
@@ -119,6 +120,7 @@ class Index extends React.Component {
   componentDidMount = () => {
     this.getCurrentUser();
     this.fetchBounties();
+    this.fetchUsers();
   };
   getCurrentUser = () => {
     fetch(`/api/users/me/`, {
@@ -167,6 +169,17 @@ class Index extends React.Component {
       .catch(error => {
         console.error(error);
       });
+  }
+
+  fetchUsers = () => {
+    fetch(`/api/users/`)
+      .then(data => data.json())
+      .then(response => {
+        this.setState({
+          users: response,
+          loaded: true
+        })
+      })
   }
 
   handleDrawerOpen = () => {
@@ -294,6 +307,7 @@ class Index extends React.Component {
           handleSnack={this.handleSnack}
           fetchBounties={this.fetchBounties}
           key={x + i} {...x}
+          users={this.state.users}
           currentUser={this.state.currentUser} />)}
       </div>
       <CreateBountyDialog handleSnack={this.handleSnack} fetchBounties={this.fetchBounties} label="Create A Bounty" />

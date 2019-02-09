@@ -8,11 +8,11 @@ const path = require('path');
 
 module.exports = (app, passport, express) => {
 	app.route('/api/users/')
-		.get(passport.authenticate('jwt', { session: false }), userController.getAll);
+		.get(userController.getAll);
 	app.route('/api/users/me/')
 		.get(passport.authenticate('jwt', { session: false }), userController.getMe);
 	app.route('/api/users/:id')
-		.get(passport.authenticate('jwt', { session: false }), userController.getUser)
+		.get(userController.getUser)
 	app.route('/api/users/totalPoints/')
 		.get(userController.getTotalPoints);
 

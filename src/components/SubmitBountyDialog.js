@@ -76,10 +76,10 @@ class ResponsiveDialog extends React.Component {
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               No
-</Button>
+            </Button>
             <Button onClick={this.handleSubmit} color="primary" autoFocus>
               Yes
-</Button>
+            </Button>
           </DialogActions>
         </Dialog>
       </div>
