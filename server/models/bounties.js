@@ -15,7 +15,7 @@ const joiBountySchema = Joi.object({
   dateCreated: Joi.string(),
   dateCompleted: Joi.string(),
   endorsements: Joi.array().unique().items(Joi.string()),
-  submissionBoard: Joi.array().unique().items(Joi.object())
+  submissionBoard: Joi.array()
 })
 
 const mongooseBountySchema = new Schema(joigoose.convert(joiBountySchema));

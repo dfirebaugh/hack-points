@@ -113,7 +113,7 @@ class FullScreenDialog extends React.Component {
                 appBar
                 fullScreen={false}
                 color="inherit"
-                createBounty={this.completeBounty}
+                completeBounty={this.completeBounty}
                 onClick={this.handleClose} />
             </Toolbar>
           </AppBar>
