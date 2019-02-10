@@ -87,7 +87,7 @@ class BountyCard extends React.Component {
   }
 
   render() {
-    const { classes, fetchBounties, currentUser, title, createdBy, img, dateCreated: date, dateCompleted, completedBy, message: description, status, endorsements } = this.props;
+    const { classes, fetchBounties, currentUser, title, createdBy, img, dateCreated: date, dateCompleted, completedBy, message: description, status, endorsements, users } = this.props;
     return (
       <Card className={classes.card}>
         <CardHeader
@@ -148,7 +148,7 @@ class BountyCard extends React.Component {
             />
           </CardContent>
         </Collapse>
-        {currentUser.id === createdBy.id && <SelectStatus bountyId={this.props._id} bountyStatus={status} />}
+        {currentUser.id === createdBy.id && <SelectStatus users={users} bountyId={this.props._id} bountyStatus={status} />}
       </Card>
     );
   }

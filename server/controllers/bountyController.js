@@ -51,25 +51,50 @@ module.exports = {
     }
 
     Bounty.findOne({ _id: req.params.bountyid }, (err, doc) => {
-      if (String(req.user.id) === String(doc.createdBy.id)) {
-        Bounty.update({ _id: req.params.bountyid }, bountyUpdate, (err, raw) => {
-          if (err) {
-            res.send(err);
-          }
-          // save the bounty
+      if (!doc.dateCompleted) {
+        if (String(req.user.id) === String(doc.createdBy.id)) {
+          Bounty.update({ _id: req.params.bountyid }, bountyUpdate, (err, raw) => {
+            if (err) {
+              res.send(err);
+            }
+            // save the bounty
+            res.json({
+              message: 'Bounty updated!',
+              update: raw
+            });
+          })
+        }
+        else {
           res.json({
-            message: 'Bounty updated!',
-            update: raw
-          });
-        })
-      }
-      else {
-        res.json({
-          message: 'you did not create this bounty'
-        })
+            message: 'you did not create this bounty'
+          })
+        }
       }
     })
 
+  },
+  complete: (req, res) => {
+    const bountyUpdate = {
+      completedBy: req.body.createdById,
+      status: "COMPLETED",
+      dateCompleted: Date.now()
+    }
+    Bounty.findOne({ _id: req.params.bountyid }, (err, doc) => {
+      if (!doc.dateCompleted) {
+        if (String(req.user.id) === String(doc.createdBy.id)) {
+          Bounty.update({ _id: req.params.bountyid }, bountyUpdate, (err, raw) => {
+            if (err) {
+              res.send(err);
+            }
+            // save the bounty
+            res.json({
+              message: `Bounty Completed By -- ${req.body.createdById}!`,
+              update: raw
+            });
+          })
+        }
+      }
+    })
   },
   submit: (req, res) => {
     const submissionMessage = {
@@ -135,7 +160,7 @@ module.exports = {
     bounty.save((err, result) => {
       if (err) {
         res.json({
-          err: err.message,
+          message: err.message,
           id: bounty.id,
         });
       } else {
