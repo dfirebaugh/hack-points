@@ -21,6 +21,7 @@ const styles = {
   },
   paper: {
     paddingTop: '1em',
+    margin: '1em',
     width: "90%",
     display: "flex",
     justifyContent: "center",

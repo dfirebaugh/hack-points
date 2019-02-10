@@ -15,6 +15,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import SubmitBountyDialog from './SubmitBountyDialog';
 import SubmissionBoard from './SubmissionBoard';
+import SelectStatus from './SelectStatus';
 
 const styles = {
   appBar: {
@@ -85,7 +86,7 @@ class FullScreenDialog extends React.Component {
   }
 
   render() {
-    const { classes, btnClass } = this.props;
+    const { classes, btnClass, status, bountyId, currentUser, createdBy } = this.props;
     return (
       <div>
         {this.props.menuItem ?
@@ -119,6 +120,7 @@ class FullScreenDialog extends React.Component {
             </Toolbar>
           </AppBar>
 
+          {currentUser.id === createdBy.id && <SelectStatus bountyId={bountyId} bountyStatus={status} />}
           <form className={classes.container} noValidate autoComplete="off">
 
             So you've completed the bounty? Enter a message so that the creator of the bounty can approve.

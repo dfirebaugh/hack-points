@@ -36,9 +36,14 @@ module.exports = {
     })
   },
   update: (req, res) => {
-    const bountyUpdate = {
-      title: req.body.title,
-      message: req.body.message
+    const bountyUpdate = {}
+
+    if (req.body.title) {
+      bountyUpdate.title = req.body.title;
+    }
+
+    if (req.body.mess) {
+      bountyUpdate.message = req.body.message;
     }
 
     if (req.body.status) {
@@ -117,7 +122,6 @@ module.exports = {
       title: req.body.title,
       message: req.body.message,
       status: req.body.status,
-      pointValue: req.body.pointValue,
       createdBy: {
         name,
         email,

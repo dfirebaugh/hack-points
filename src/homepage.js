@@ -4,6 +4,7 @@ import baseTheme from "./themes/baseTheme";
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
+import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -215,7 +216,6 @@ class Index extends React.Component {
   }
 
   handleLogin = (email, password) => {
-    console.log('login', Auth.getToken())
     const loginURI = '/login'
     const postData = {
       email: email,
@@ -248,6 +248,20 @@ class Index extends React.Component {
       snackMessageType: msgType
     })
   }
+  handleFilter = value => e => {
+    if (value !== 'All') {
+      this.setState({
+        currFilter: value
+      })
+    }
+    else {
+      this.setState({
+        currFilter: null
+      })
+    }
+  }
+
+  bountyFilter = x => this.state.currFilter ? x.status === this.state.currFilter : true
 
   handleSnackClose = () => {
     this.setState({ snackBarOpen: false })
@@ -298,12 +312,15 @@ class Index extends React.Component {
     >
       <div className={classes.drawerHeader} />
       <Typography > Create a Bounty, Complete a Bounty, or Upvote a Bounty </Typography>
-      {/* <Typography> Sort By:
-      <Button color="primary" className={classes.button}>Age</Button>
-      <Button color="primary" className={classes.button}>Votes</Button>
-    </Typography> */}
+      <Typography> Filter:
+
+        <Button color="primary" onClick={this.handleFilter("All")} className={classes.button}>All</Button>
+        <Button color="primary" onClick={this.handleFilter("PENDING")} className={classes.button}>Pending</Button>
+        <Button color="primary" onClick={this.handleFilter("BLOCKED")} className={classes.button}>Blocked</Button>
+        <Button color="primary" onClick={this.handleFilter("COMPLETED")} className={classes.button}>Completed</Button>
+      </Typography>
       <div className={classes.cards}>
-        {bounties && bounties.map((x, i) => <BountyCard
+        {bounties && bounties.filter(this.bountyFilter).map((x, i) => <BountyCard
           handleSnack={this.handleSnack}
           fetchBounties={this.fetchBounties}
           key={x + i} {...x}

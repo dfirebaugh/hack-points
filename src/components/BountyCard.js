@@ -18,6 +18,7 @@ import BountyCardMenu from './BountyCardMenu';
 import Tooltip from '@material-ui/core/Tooltip';
 import Auth from '../services/Auth';
 import CompleteBountyDialog from './CompleteBountyDialog';
+import SelectStatus from './SelectStatus';
 
 const styles = theme => ({
   card: {
@@ -106,6 +107,7 @@ class BountyCard extends React.Component {
         />
 
 
+
         <CardActions className={classes.actions} disableActionSpacing>
           <IconButton onClick={this.handleEndorseClick} aria-label="Add to favorites">
             {this.state.endorsed ?
@@ -141,10 +143,12 @@ class BountyCard extends React.Component {
               title={this.props.title}
               fetchBounties={this.props.fetchBounties}
               description={this.props.message}
+              status={status}
               {...this.props}
             />
           </CardContent>
         </Collapse>
+        {currentUser.id === createdBy.id && <SelectStatus bountyId={this.props._id} bountyStatus={status} />}
       </Card>
     );
   }
