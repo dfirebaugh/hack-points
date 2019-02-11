@@ -70,14 +70,19 @@ module.exports = {
           })
         }
       }
+      else {
+        res.json({
+          message: "This bounty has already been completed."
+        })
+      }
     })
 
   },
   complete: (req, res) => {
     const bountyUpdate = {
-      completedBy: req.body.createdById,
+      completedBy: req.body.completedById,
       status: "COMPLETED",
-      dateCompleted: Date.now()
+      dateCompleted: new Date
     }
     Bounty.findOne({ _id: req.params.bountyid }, (err, doc) => {
       if (!doc.dateCompleted) {
@@ -119,26 +124,28 @@ module.exports = {
     Bounty.findById(req.params.bountyid, (err, doc) => {
       err && res.json({ message: err });
 
-      const endorsed = doc.endorsements.includes(req.user.id)
-      endorsed ?
-        doc.endorsements.splice(doc.endorsements.indexOf(req.user.id), 1) :
-        doc.endorsements.push(req.user.id);
-      doc.save((err, result) => {
-        if (err) {
-          res.json({
-            message: err.message,
-            err: err.message,
-            id: doc.id,
-          });
-        } else {
-          const message = endorsed ? 'Removing endorsement!' : 'Adding endorsement!'
-          res.json({
-            message: message,
-            id: doc.id,
-            endorsements: doc.endorsements
-          });
-        }
-      });
+      if (!doc.dateCompleted) {
+        const endorsed = doc.endorsements.includes(req.user.id)
+        endorsed ?
+          doc.endorsements.splice(doc.endorsements.indexOf(req.user.id), 1) :
+          doc.endorsements.push(req.user.id);
+        doc.save((err, result) => {
+          if (err) {
+            res.json({
+              message: err.message,
+              err: err.message,
+              id: doc.id,
+            });
+          } else {
+            const message = endorsed ? 'Removing endorsement!' : 'Adding endorsement!'
+            res.json({
+              message: message,
+              id: doc.id,
+              endorsements: doc.endorsements
+            });
+          }
+        });
+      }
     })
   },
   post: (req, res) => {
@@ -152,7 +159,7 @@ module.exports = {
         email,
         img,
         id: _id
-      },//req.body.createdBy,
+      },
       createdIcon: req.body.createdIcon,
       endorsements: []
     });

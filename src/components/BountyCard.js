@@ -88,6 +88,14 @@ class BountyCard extends React.Component {
 
   render() {
     const { classes, fetchBounties, currentUser, title, createdBy, img, dateCreated: date, dateCompleted, completedBy, message: description, status, endorsements, users } = this.props;
+    const owner = currentUser.id === createdBy.id && <SelectStatus users={users} bountyId={this.props._id} bountyStatus={status} />
+    const completed = completedBy && <div>
+      <strong>Completed by: </strong> {
+        users.find(x => x._id === completedBy).name
+      }
+      <p> <strong> Date Completed: </strong> {dateCompleted} </p>
+      <p> <strong>Points: </strong> {this.state.endorsements.length} </p>
+    </div>
     return (
       <Card className={classes.card}>
         <CardHeader
@@ -106,19 +114,24 @@ class BountyCard extends React.Component {
           subheader={date}
         />
 
-
+        {status === "COMPLETED" ? completed : owner}
 
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton onClick={this.handleEndorseClick} aria-label="Add to favorites">
-            {this.state.endorsed ?
-              <FavoriteIcon color='primary' /> :
-              <FavoriteIcon />
-            }
-          </IconButton>
-          <Typography>
-            {this.state.endorsements.length}
-            {/* {this.state.endorsed ? endorsements.length + 1 : endorsements.length} */}
-          </Typography>
+          {
+            !completedBy &&
+            <div>
+              <IconButton onClick={this.handleEndorseClick} aria-label="Add to favorites">
+                {this.state.endorsed ?
+                  <FavoriteIcon color='primary' /> :
+                  <FavoriteIcon />
+                }
+              </IconButton>
+              <Typography>
+                {this.state.endorsements.length}
+                {/* {this.state.endorsed ? endorsements.length + 1 : endorsements.length} */}
+              </Typography>
+            </div>
+          }
 
           <IconButton
             className={classnames(classes.expand, {
@@ -138,7 +151,7 @@ class BountyCard extends React.Component {
             </Typography>
             <CompleteBountyDialog
               btnClass={classes.completeBtn}
-              label="Complete"
+              label="Message Board"
               bountyId={this.props._id}
               title={this.props.title}
               fetchBounties={this.props.fetchBounties}
@@ -148,7 +161,6 @@ class BountyCard extends React.Component {
             />
           </CardContent>
         </Collapse>
-        {currentUser.id === createdBy.id && <SelectStatus users={users} bountyId={this.props._id} bountyStatus={status} />}
       </Card>
     );
   }

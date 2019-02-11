@@ -319,14 +319,16 @@ class Index extends React.Component {
         <Button color="primary" onClick={this.handleFilter("BLOCKED")} className={classes.button}>Blocked</Button>
         <Button color="primary" onClick={this.handleFilter("COMPLETED")} className={classes.button}>Completed</Button>
       </Typography>
-      <div className={classes.cards}>
-        {bounties && bounties.filter(this.bountyFilter).map((x, i) => <BountyCard
-          handleSnack={this.handleSnack}
-          fetchBounties={this.fetchBounties}
-          key={x + i} {...x}
-          users={this.state.users}
-          currentUser={this.state.currentUser} />)}
-      </div>
+      {this.state.users &&
+        <div className={classes.cards}>
+          {bounties && bounties.filter(this.bountyFilter).map((x, i) => <BountyCard
+            handleSnack={this.handleSnack}
+            fetchBounties={this.fetchBounties}
+            key={x + i} {...x}
+            users={this.state.users}
+            currentUser={this.state.currentUser} />)}
+        </div>
+      }
       <CreateBountyDialog handleSnack={this.handleSnack} fetchBounties={this.fetchBounties} label="Create A Bounty" />
     </main>
 

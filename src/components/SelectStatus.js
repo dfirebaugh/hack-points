@@ -67,6 +67,11 @@ class SimpleSelect extends React.Component {
         completedById: completedById
       })
     })
+      .then(response => response.json)
+      .then(data => {
+        this.props.fetchBounties()
+        this.props.handleSnack(data.message)
+      })
   }
 
   handleChange = event => {
