@@ -1,14 +1,44 @@
-version: '2'
+version: "3"
 services:
-    web:
+    hackpoints:
         build: .
-        ports:
-            - ${PORT}:${PORT}
-        links:
-            - hack-points-db
-    hack-points-db:
-        image: mongo
+        ports: 
+            - 8000:8000
+        volumes: 
+            - .src/:/hackpoints
+        depends_on:
+            - postgres
+        networks:
+            - hackpoints
+        environment:
+            - DATABASE_URL=postgresql://test:test@postgres:5432/hackpoints
         volumes:
-            - /data/mongodb/db:/data/db
+            # This is go modules cache, without it you will have to
+            # re-download all dependencies after restarting container
+            - modules:/go/pkg/mod/cache
+    # web:
+    #     build: .
+    #     ports:
+    #         - ${PORT}:${PORT}
+    #     links:
+    #         - hack-points-db
+    postgres:
+        image: postgres
         ports:
-            - '27017:27017'
+            - 5432:5432
+        environment:
+          - POSTGRES_DB=hackpoints
+          - POSTGRES_USER=test
+          - POSTGRES_PASSWORD=test
+        volumes:
+            - ./test/postgres/hackpoints.sql:/docker-entrypoint-initdb.d/hackpoints.sql
+        networks:
+            - hackpoints
+
+networks:
+    hackpoints:
+        external: false
+
+volumes:
+    modules:
+        driver: local
